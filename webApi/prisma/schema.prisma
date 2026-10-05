@@ -1,0 +1,60 @@
+// Itália Plano — lugares salvos por trecho da viagem, fotos de cada lugar e
+// os itens marcados do checklist. Não há usuários: os dados são de quem tem a
+// URL. As regras que precisam valer mesmo fora da API (tipo e tamanho das
+// fotos) também ficam no banco: ver a migração `init`.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  // Postgres (Neon). DATABASE_URL é a conexão pooled (runtime); DIRECT_URL é a
+  // conexão direta, sem pooler, usada só pelo Prisma Migrate.
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Lugar {
+  id           String   @id @default(uuid()) @db.Uuid
+  trecho       String   // roma | toscana | cinque | veneza | norte | napoles | amalfi
+  tipo         String   // Hospedagem | Atração | Restaurante | Experiência | Outro
+  nome         String   // 1 a 120 caracteres
+  resumo       String   @default("")
+  preco        String   @default("")
+  link         String   @default("") // vazio ou URL http(s)
+  descricao    String   @default("")
+  destaques    String[]
+  criadoEm     DateTime @default(now())
+  atualizadoEm DateTime @default(now()) @updatedAt
+
+  fotos Foto[]
+
+  @@index([trecho, criadoEm])
+  @@map("lugares")
+}
+
+model Foto {
+  id       String   @id @default(uuid()) @db.Uuid
+  // Nulo = foto enviada e ainda sem lugar (órfã). CASCADE: apagar o lugar
+  // apaga as fotos dele.
+  lugarId  String?  @db.Uuid
+  lugar    Lugar?   @relation(fields: [lugarId], references: [id], onDelete: Cascade)
+  ordem    Int      @default(0) // posição da foto dentro do lugar
+  tipoMime String   // image/jpeg | image/png | image/webp
+  tamanho  Int      // em bytes
+  dados    Bytes    // o arquivo em si (até 2 MB)
+  criadoEm DateTime @default(now())
+
+  @@index([lugarId, ordem])
+  @@map("fotos")
+}
+
+// Linha presente = item marcado. Os ids válidos ficam no código
+// (modules/checklist/checklist.constantes.ts).
+model ChecklistMarcado {
+  itemId    String   @id
+  marcadoEm DateTime @default(now())
+
+  @@map("checklist_marcados")
+}

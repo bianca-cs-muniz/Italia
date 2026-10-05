@@ -1,0 +1,45 @@
+# Dependências
+node_modules/
+.pnp
+.pnp.*
+
+# Variáveis de ambiente (nunca commitar segredos/URLs de banco reais)
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Banco de dados local (SQLite)
+webApi/prisma/dev.db
+webApi/prisma/dev.db-journal
+*.db
+*.db-journal
+
+# Build / output
+webApi/dist/
+webApp/.next/
+webApp/out/
+webApp/build/
+*.tsbuildinfo
+webApp/next-env.d.ts
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# Cobertura de testes
+coverage/
+
+# Sistema operacional / editor
+.DS_Store
+Thumbs.db
+*.pem
+
+# Arquivos de assistentes de IA / configuração local de ferramentas
+CLAUDE.md
+AGENTS.md
+.claude/
+.cursor/
+.windsurf/

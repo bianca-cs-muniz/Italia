@@ -1,0 +1,291 @@
+@import url('https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Figtree:wght@400;500;600;700&display=swap');
+
+/* Tokens do protótipo. O tema acompanha o sistema (prefers-color-scheme) e
+   pode ser forçado com data-theme="light" | "dark" no <html>. */
+:root {
+  --paper: #F4F6FA;
+  --paper-2: #E9EDF5;
+  --card: #FFFFFF;
+  --ink: #16213A;
+  --muted: #5B6478;
+  --line: #D7DDE9;
+  --maiolica: #1F4AA8;
+  --maiolica-deep: #0F2C6E;
+  --limone: #F2C641;
+  --limone-ink: #5A4300;
+  --pino: #2E6B57;
+  --on-blue: #F4F6FA;
+  --shadow: 0 18px 50px -24px rgba(15, 44, 110, .45);
+
+  --serif: "Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --sans: "Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #0D1630;
+    --paper-2: #121D3D;
+    --card: #16224A;
+    --ink: #EEF1F8;
+    --muted: #A3ADC6;
+    --line: #2A375C;
+    --maiolica: #8FB0FF;
+    --maiolica-deep: #0A1B47;
+    --limone: #F5D262;
+    --limone-ink: #3A2C00;
+    --pino: #7CC4A8;
+    --on-blue: #EEF1F8;
+    --shadow: 0 18px 50px -24px rgba(0, 0, 0, .7);
+  }
+}
+
+:root[data-theme="dark"] {
+  --paper: #0D1630;
+  --paper-2: #121D3D;
+  --card: #16224A;
+  --ink: #EEF1F8;
+  --muted: #A3ADC6;
+  --line: #2A375C;
+  --maiolica: #8FB0FF;
+  --maiolica-deep: #0A1B47;
+  --limone: #F5D262;
+  --limone-ink: #3A2C00;
+  --pino: #7CC4A8;
+  --on-blue: #EEF1F8;
+  --shadow: 0 18px 50px -24px rgba(0, 0, 0, .7);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 76px);
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  font: inherit;
+  color: inherit;
+}
+
+a {
+  color: var(--maiolica);
+}
+
+:focus-visible {
+  outline: 3px solid var(--limone);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.wrap {
+  width: min(1180px, 100% - 40px);
+  margin-inline: auto;
+}
+
+/* Azulejo de maiólica: fundo do mapa, do total do orçamento e dos cartões sem foto. */
+.tiles {
+  background-color: var(--maiolica-deep);
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23F2C641' stroke-width='1.2' opacity='.32'%3E%3Cpath d='M24 4c6 8 6 12 0 20-6-8-6-12 0-20zM24 44c6-8 6-12 0-20-6 8-6 12 0 20zM4 24c8-6 12-6 20 0-8 6-12 6-20 0zM44 24c-8-6-12-6-20 0 8 6 12 6 20 0z'/%3E%3Ccircle cx='24' cy='24' r='3'/%3E%3Cpath d='M0 0l8 8M48 0l-8 8M0 48l8-8M48 48l-8-8'/%3E%3C/g%3E%3C/svg%3E");
+}
+
+/* Seções: espaçamento e cabeçalho são iguais em todas, por isso ficam aqui. */
+main > section {
+  padding: 72px 0;
+}
+
+.sec-head {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 36px;
+}
+
+.sec-head h2 {
+  font-family: var(--serif);
+  font-weight: 500;
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  line-height: 1;
+  margin: 0;
+}
+
+.sec-head p {
+  margin: 0;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+/* Entrada ao rolar: `useRevelar` acrescenta a classe `in`. */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s cubic-bezier(.2, .8, .2, 1), transform .9s cubic-bezier(.2, .8, .2, 1);
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: none;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chip {
+  font-size: .88rem;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+}
+
+.tag {
+  align-self: flex-start;
+  font-size: .75rem;
+  font-weight: 600;
+  padding: 2px 9px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--maiolica) 14%, transparent);
+  color: var(--maiolica);
+}
+
+.tag[data-tipo="Hospedagem"] {
+  background: color-mix(in srgb, var(--pino) 16%, transparent);
+  color: var(--pino);
+}
+
+.tag[data-tipo="Restaurante"] {
+  background: color-mix(in srgb, var(--limone) 35%, transparent);
+  color: var(--limone-ink);
+}
+
+:root[data-theme="dark"] .tag[data-tipo="Restaurante"] {
+  color: var(--limone);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .tag[data-tipo="Restaurante"] {
+    color: var(--limone);
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: .95rem;
+  padding: 10px 18px;
+  border-radius: 999px;
+  background: var(--maiolica);
+  color: #fff;
+  text-decoration: none;
+  transition: transform .2s, filter .2s;
+}
+
+/* No escuro o azul fica claro e pede texto escuro. As variantes `ghost` e
+   `danger` têm cor própria e ficam de fora (no protótipo esta regra as
+   sobrescrevia e o texto sumia no fundo escuro). */
+:root[data-theme="dark"] .btn:not(.ghost):not(.danger) {
+  color: #0A1B47;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .btn:not(.ghost):not(.danger) {
+    color: #0A1B47;
+  }
+}
+
+.btn:hover {
+  transform: translateY(-1px);
+  filter: brightness(1.08);
+}
+
+.btn.ghost {
+  background: transparent;
+  color: var(--ink);
+  border: 1px solid var(--line);
+}
+
+.btn.lemon {
+  background: var(--limone);
+  color: var(--limone-ink);
+}
+
+.btn.danger {
+  background: #B3261E;
+  color: #fff;
+}
+
+.btn:disabled {
+  opacity: .6;
+  cursor: wait;
+}
+
+@keyframes rise {
+  to {
+    transform: none;
+    opacity: 1;
+  }
+}
+
+@keyframes fade {
+  to {
+    opacity: 1;
+  }
+}
+
+@media (max-width: 520px) {
+  body {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0s !important;
+    transition-duration: .01ms !important;
+    transition-delay: 0s !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+}

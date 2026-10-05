@@ -1,0 +1,926 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Itália em setembro — plano de viagem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..800;1,6..96,400..700&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F4F6FA; --paper-2:#E9EDF5; --card:#FFFFFF; --ink:#16213A; --muted:#5B6478; --line:#D7DDE9;
+  --maiolica:#1F4AA8; --maiolica-deep:#0F2C6E; --limone:#F2C641; --limone-ink:#5A4300; --pino:#2E6B57;
+  --on-blue:#F4F6FA; --shadow:0 18px 50px -24px rgba(15,44,110,.45);
+  --serif:"Bodoni Moda", "Didot", "Bodoni 72", Georgia, serif;
+  --sans:"Figtree", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1630; --paper-2:#121D3D; --card:#16224A; --ink:#EEF1F8; --muted:#A3ADC6; --line:#2A375C;
+    --maiolica:#8FB0FF; --maiolica-deep:#0A1B47; --limone:#F5D262; --limone-ink:#3A2C00; --pino:#7CC4A8;
+    --on-blue:#EEF1F8; --shadow:0 18px 50px -24px rgba(0,0,0,.7);
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1630; --paper-2:#121D3D; --card:#16224A; --ink:#EEF1F8; --muted:#A3ADC6; --line:#2A375C;
+  --maiolica:#8FB0FF; --maiolica-deep:#0A1B47; --limone:#F5D262; --limone-ink:#3A2C00; --pino:#7CC4A8;
+  --on-blue:#EEF1F8; --shadow:0 18px 50px -24px rgba(0,0,0,.7);
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-behavior:smooth; scroll-padding-top:calc(env(safe-area-inset-top,0px) + 76px)}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit}
+a{color:var(--maiolica)}
+:focus-visible{outline:3px solid var(--limone);outline-offset:3px;border-radius:6px}
+.wrap{width:min(1180px,100% - 40px);margin-inline:auto}
+.tiles{background-color:var(--maiolica-deep);background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='56' viewBox='0 0 48 48'%3E%3Cg fill='none' stroke='%23F2C641' stroke-width='1.2' opacity='.32'%3E%3Cpath d='M24 4c6 8 6 12 0 20-6-8-6-12 0-20zM24 44c6-8 6-12 0-20-6 8-6 12 0 20zM4 24c8-6 12-6 20 0-8 6-12 6-20 0zM44 24c-8-6-12-6-20 0 8 6 12 6 20 0z'/%3E%3Ccircle cx='24' cy='24' r='3'/%3E%3Cpath d='M0 0l8 8M48 0l-8 8M0 48l8-8M48 48l-8-8'/%3E%3C/g%3E%3C/svg%3E")}
+
+/* NAV */
+.nav{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);background:color-mix(in srgb,var(--paper) 78%,transparent);border-bottom:1px solid transparent;transition:border-color .3s}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:20px;height:64px}
+.brand{font-family:var(--serif);font-style:italic;font-size:1.45rem;text-decoration:none;color:var(--ink);white-space:nowrap}
+.nav-links{display:flex;gap:4px;margin-left:auto;overflow-x:auto;scrollbar-width:none}
+.nav-links::-webkit-scrollbar{display:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-weight:500;font-size:.95rem;padding:8px 12px;border-radius:999px;white-space:nowrap;transition:background .2s,color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--ink);background:var(--paper-2)}
+
+/* HERO */
+.hero{padding:48px 0 72px}
+.hero .wrap{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center}
+.who{color:var(--muted);font-size:1.05rem;margin:0 0 6px}
+.title{font-family:var(--serif);font-weight:500;font-size:clamp(5.2rem,15vw,11.5rem);line-height:.86;letter-spacing:-.02em;margin:0;color:var(--maiolica)}
+.title .l{display:inline-block;transform:translateY(.5em);opacity:0;animation:rise .9s cubic-bezier(.2,.8,.2,1) forwards}
+.title-2{font-family:var(--serif);font-style:italic;font-size:clamp(1.9rem,4.2vw,3.1rem);line-height:1.1;margin:.2em 0 .6em;opacity:0;animation:fade .8s .55s forwards}
+@keyframes rise{to{transform:none;opacity:1}}
+@keyframes fade{to{opacity:1}}
+.goal{max-width:44ch;font-size:1.1rem;color:var(--muted);margin:0 0 28px;opacity:0;animation:fade .8s .75s forwards}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:18px;overflow:hidden;opacity:0;animation:fade .8s .95s forwards}
+.fact{background:var(--card);padding:14px 16px}
+.fact dt{font-size:.82rem;color:var(--muted)}
+.fact dd{margin:2px 0 0;font-weight:600;font-size:1.02rem;line-height:1.35}
+.fact.money dd{font-family:var(--serif);font-size:1.35rem;font-weight:600;color:var(--maiolica)}
+
+.mapcard{position:relative;border-radius:28px;color:var(--on-blue);padding:22px 22px 14px;box-shadow:var(--shadow);overflow:hidden;opacity:0;transform:translateY(20px) scale(.98);animation:rise 1s .2s cubic-bezier(.2,.8,.2,1) forwards}
+.mapcard::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 80% at 80% 0%,transparent 40%,rgba(5,15,45,.55));pointer-events:none}
+.mapcard h2{position:relative;z-index:1;margin:0;font-family:var(--serif);font-weight:500;font-size:1.35rem}
+.mapcard p{position:relative;z-index:1;margin:2px 0 0;font-size:.9rem;opacity:.75}
+.route{position:relative;z-index:1;width:100%;height:auto;display:block;margin-top:6px}
+.route .main{fill:none;stroke:var(--limone);stroke-width:3.2;stroke-linecap:round;stroke-linejoin:round}
+.route .long{fill:none;stroke:var(--limone);stroke-width:2;stroke-dasharray:2 7;stroke-linecap:round;opacity:0;transition:opacity 1s}
+.route .spur{fill:none;stroke:#fff;stroke-width:1.4;stroke-dasharray:3 5;opacity:0;transition:opacity .8s}
+.route.drawn .long,.route.drawn .spur{opacity:.7}
+.stop{cursor:pointer;opacity:0;transform-box:fill-box;transform-origin:center;transition:opacity .4s}
+.stop.on{opacity:1}
+.stop .ring{fill:var(--maiolica-deep);stroke:#fff;stroke-width:2.2;transition:r .25s,fill .25s}
+.stop.base .ring{stroke:var(--limone);stroke-width:3}
+.stop:hover .ring,.stop:focus-visible .ring{fill:var(--limone);r:8.5}
+.stop text{fill:#fff;font-family:var(--sans);font-size:13px;font-weight:600;paint-order:stroke;stroke:rgba(10,27,71,.85);stroke-width:4px;stroke-linejoin:round}
+.stop text.d{font-size:10.5px;font-weight:500;fill:var(--limone)}
+.stop:focus{outline:none}
+.train{fill:#fff;filter:drop-shadow(0 0 6px var(--limone))}
+.legend{position:relative;z-index:1;display:flex;gap:16px;flex-wrap:wrap;font-size:.8rem;opacity:.8;margin-top:4px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:22px;height:0;border-top:3px solid var(--limone)}
+.legend i.dash{border-top:2px dotted var(--limone)}
+.legend i.spurl{border-top:1.5px dashed #fff}
+
+/* SECTIONS */
+section{padding:72px 0}
+.sec-head{display:flex;align-items:end;justify-content:space-between;gap:20px;flex-wrap:wrap;margin-bottom:36px}
+.sec-head h2{font-family:var(--serif);font-weight:500;font-size:clamp(2.4rem,5vw,3.8rem);line-height:1;margin:0}
+.sec-head p{margin:0;color:var(--muted);max-width:52ch}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity .9s cubic-bezier(.2,.8,.2,1),transform .9s cubic-bezier(.2,.8,.2,1)}
+.reveal.in{opacity:1;transform:none}
+
+/* CHAPTERS */
+.chapter{display:grid;grid-template-columns:minmax(240px,.8fr) 2fr;gap:48px;padding:56px 0;border-top:1px solid var(--line)}
+.ch-side{position:sticky;top:96px;align-self:start}
+.ch-days{display:inline-block;font-weight:600;font-size:.88rem;color:var(--limone-ink);background:var(--limone);padding:4px 12px;border-radius:999px}
+.ch-title{font-family:var(--serif);font-weight:500;font-size:clamp(2.6rem,5.5vw,4.4rem);line-height:.95;margin:14px 0 6px;letter-spacing:-.01em}
+.ch-sub{font-family:var(--serif);font-style:italic;font-size:1.2rem;color:var(--muted);margin:0 0 18px}
+.ch-base{font-size:.95rem;border-left:3px solid var(--maiolica);padding:2px 0 2px 14px;color:var(--muted)}
+.ch-base b{color:var(--ink);font-weight:600}
+.days{list-style:none;margin:0;padding:0;display:grid;gap:4px}
+.day{display:grid;grid-template-columns:72px 1fr;gap:18px;padding:18px 0;border-bottom:1px dashed var(--line)}
+.day:last-child{border-bottom:0}
+.day-n{font-family:var(--serif);font-size:2.6rem;line-height:.9;color:var(--maiolica);font-weight:500}
+.day-n small{display:block;font-family:var(--sans);font-size:.74rem;color:var(--muted);font-weight:500;margin-bottom:4px}
+.day h3{margin:2px 0 8px;font-size:1.15rem;font-weight:700}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:.88rem;padding:4px 11px;border-radius:999px;background:var(--paper-2);border:1px solid var(--line)}
+.day .note{margin:10px 0 0;font-size:.92rem;color:var(--pino);font-style:italic}
+
+.places-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:34px 0 14px}
+.places-head h3{margin:0;font-family:var(--serif);font-weight:500;font-size:1.6rem}
+.places-head .count{color:var(--muted);font-family:var(--sans);font-size:.9rem;margin-left:8px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px}
+.place{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;background:var(--card);border:1px solid var(--line);border-radius:20px;overflow:hidden;transition:transform .35s cubic-bezier(.2,.8,.2,1),box-shadow .35s,border-color .35s}
+.place:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:transparent}
+.place:focus-visible{outline:3px solid var(--limone);outline-offset:3px}
+.media{position:relative;aspect-ratio:4/3;overflow:hidden;background:var(--maiolica-deep)}
+.media img{width:100%;height:100%;object-fit:cover;transition:transform .8s cubic-bezier(.2,.8,.2,1)}
+.place:hover .media img{transform:scale(1.06)}
+.ph{width:100%;height:100%;display:grid;place-items:center}
+.ph span{font-family:var(--serif);font-style:italic;font-size:4rem;color:var(--limone);text-shadow:0 2px 20px rgba(0,0,0,.4)}
+.media .nimg{position:absolute;right:10px;bottom:10px;font-size:.75rem;font-weight:600;background:rgba(10,20,50,.7);color:#fff;padding:3px 9px;border-radius:999px}
+.pbody{padding:14px 16px 16px;display:flex;flex-direction:column;gap:4px;flex:1}
+.tag{align-self:flex-start;font-size:.75rem;font-weight:600;padding:2px 9px;border-radius:999px;background:color-mix(in srgb,var(--maiolica) 14%,transparent);color:var(--maiolica)}
+.tag.t-Hospedagem{background:color-mix(in srgb,var(--pino) 16%,transparent);color:var(--pino)}
+.tag.t-Restaurante{background:color-mix(in srgb,var(--limone) 35%,transparent);color:var(--limone-ink)}
+:root[data-theme="dark"] .tag.t-Restaurante{color:var(--limone)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tag.t-Restaurante{color:var(--limone)}}
+.pbody h4{margin:4px 0 0;font-size:1.08rem;line-height:1.3}
+.pbody p{margin:0;font-size:.9rem;color:var(--muted);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pbody .price{margin-top:auto;padding-top:6px;font-weight:600;font-size:.92rem}
+.add{all:unset;box-sizing:border-box;cursor:pointer;min-height:220px;border:2px dashed var(--line);border-radius:20px;display:grid;place-items:center;text-align:center;color:var(--muted);padding:20px;transition:border-color .25s,color .25s,background .25s}
+.add:hover{border-color:var(--maiolica);color:var(--maiolica);background:color-mix(in srgb,var(--maiolica) 6%,transparent)}
+.add:focus-visible{outline:3px solid var(--limone);outline-offset:3px}
+.add .plus{font-family:var(--serif);font-size:2.6rem;line-height:1;display:block}
+.empty-note{grid-column:1/-1;color:var(--muted);font-size:.95rem;margin:0}
+.btn{display:inline-flex;align-items:center;gap:8px;border:0;cursor:pointer;font-weight:600;font-size:.95rem;padding:10px 18px;border-radius:999px;background:var(--maiolica);color:#fff;text-decoration:none;transition:transform .2s,filter .2s}
+:root[data-theme="dark"] .btn{color:#0A1B47}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .btn{color:#0A1B47}}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.08)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.btn.lemon{background:var(--limone);color:var(--limone-ink)}
+.btn.danger{background:#B3261E;color:#fff}
+.btn:disabled{opacity:.6;cursor:wait}
+
+/* STAY TABLE */
+.table-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:20px;background:var(--card)}
+table{border-collapse:collapse;width:100%;min-width:560px}
+th,td{text-align:left;padding:16px 20px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{font-size:.85rem;color:var(--muted);font-weight:600}
+td.city{font-family:var(--serif);font-size:1.35rem}
+td.n{font-family:var(--serif);font-size:1.6rem;color:var(--maiolica);width:90px}
+
+/* BUDGET */
+.budget{display:grid;gap:14px}
+.brow{display:grid;grid-template-columns:200px 1fr 170px;gap:18px;align-items:center}
+.brow .lbl{font-weight:600}
+.brow .val{text-align:right;font-variant-numeric:tabular-nums;color:var(--muted)}
+.track{position:relative;height:14px;border-radius:999px;background:var(--paper-2);overflow:hidden}
+.fill{position:absolute;top:0;bottom:0;border-radius:999px;background:linear-gradient(90deg,var(--maiolica) 0%,var(--maiolica) 60%,color-mix(in srgb,var(--maiolica) 45%,transparent) 100%);width:0;transition:width 1.2s cubic-bezier(.2,.8,.2,1),left 1.2s cubic-bezier(.2,.8,.2,1)}
+.total{margin-top:28px;display:flex;align-items:baseline;justify-content:space-between;gap:16px;flex-wrap:wrap;padding:26px 28px;border-radius:24px;color:var(--on-blue)}
+.total .t1{font-family:var(--serif);font-size:1.4rem;font-style:italic}
+.total .t2{font-family:var(--serif);font-size:clamp(2rem,5vw,3.2rem);color:var(--limone);font-weight:600;line-height:1}
+.fine{color:var(--muted);font-size:.9rem;margin-top:14px;max-width:70ch}
+
+/* CHECKLIST */
+.checks{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px}
+.check{display:flex;gap:14px;align-items:center;padding:14px 16px;border-radius:16px;background:var(--card);border:1px solid var(--line);cursor:pointer;transition:background .25s,border-color .25s}
+.check input{position:absolute;opacity:0;pointer-events:none}
+.box{flex:none;width:26px;height:26px;border-radius:8px;border:2px solid var(--line);display:grid;place-items:center;transition:background .25s,border-color .25s,transform .25s}
+.box svg{width:16px;height:16px;stroke:var(--limone-ink);stroke-width:3;fill:none;stroke-dasharray:24;stroke-dashoffset:24;transition:stroke-dashoffset .35s .05s}
+.check.done{background:color-mix(in srgb,var(--limone) 14%,var(--card));border-color:color-mix(in srgb,var(--limone) 60%,var(--line))}
+.check.done .box{background:var(--limone);border-color:var(--limone);transform:scale(1.06)}
+.check.done .box svg{stroke-dashoffset:0}
+.check.done .ctext{color:var(--muted);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--muted) 60%,transparent)}
+.check:has(input:focus-visible){outline:3px solid var(--limone);outline-offset:2px}
+.progress{display:flex;align-items:center;gap:14px;color:var(--muted)}
+.progress .bar{width:180px;height:8px;border-radius:999px;background:var(--paper-2);overflow:hidden}
+.progress .bar i{display:block;height:100%;width:0;background:var(--limone);transition:width .6s}
+
+/* TIPS */
+.tips{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.tip{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px 28px}
+.tip h3{font-family:var(--serif);font-weight:500;font-size:1.7rem;margin:0 0 10px}
+.tip p{margin:0 0 10px;color:var(--muted)}
+.tip .sub{font-weight:600;color:var(--ink);margin:14px 0 8px;font-size:.95rem}
+.prio{margin:0;padding:0;list-style:none;counter-reset:p}
+.prio li{counter-increment:p;display:flex;gap:14px;align-items:baseline;padding:7px 0;border-bottom:1px dashed var(--line)}
+.prio li:last-child{border-bottom:0}
+.prio li::before{content:counter(p);font-family:var(--serif);font-size:1.5rem;color:var(--maiolica);min-width:1.2em}
+.tip.wide{grid-column:1/-1}
+
+footer{padding:56px 0 72px;color:var(--muted);font-size:.92rem;border-top:1px solid var(--line)}
+footer .sig{font-family:var(--serif);font-style:italic;font-size:1.6rem;color:var(--ink);margin:0 0 6px}
+
+/* OVERLAYS */
+.overlay{position:fixed;inset:0;z-index:100;display:grid;place-items:center;padding:24px;background:rgba(6,14,38,0);transition:background .35s}
+.overlay[hidden]{display:none}
+.overlay.open{background:rgba(6,14,38,.62)}
+.sheet{position:relative;width:min(1040px,100%);max-height:min(88vh,860px);background:var(--card);border-radius:28px;overflow:hidden;display:grid;grid-template-columns:1.25fr 1fr;box-shadow:0 40px 120px -30px rgba(0,0,0,.6);opacity:0;transform:scale(.88) translateY(20px);transition:opacity .35s,transform .5s cubic-bezier(.2,.9,.2,1)}
+.overlay.open .sheet{opacity:1;transform:none}
+.gallery{position:relative;background:var(--maiolica-deep);min-height:340px}
+.slide{position:absolute;inset:0;opacity:0;transform:scale(1.04);transition:opacity .55s,transform 1.2s cubic-bezier(.2,.8,.2,1)}
+.slide.active{opacity:1;transform:none}
+.slide img{width:100%;height:100%;object-fit:cover}
+.gnav{position:absolute;top:50%;translate:0 -50%;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.88);color:#0A1B47;cursor:pointer;display:grid;place-items:center;font-size:1.3rem;transition:transform .2s}
+.gnav:hover{transform:scale(1.08)}
+.gnav.prev{left:14px}.gnav.next{right:14px}
+.gcount{position:absolute;left:16px;bottom:14px;color:#fff;font-size:.82rem;font-weight:600;background:rgba(6,14,38,.6);padding:4px 10px;border-radius:999px}
+.dots{position:absolute;right:16px;bottom:16px;display:flex;gap:6px}
+.dots i{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.45);transition:background .3s,width .3s}
+.dots i.on{background:#fff;width:20px;border-radius:4px}
+.info{padding:30px 30px 26px;overflow-y:auto;display:flex;flex-direction:column;gap:12px}
+.info .where{color:var(--muted);font-size:.9rem;margin:0}
+.info h2{font-family:var(--serif);font-weight:500;font-size:clamp(1.9rem,3.4vw,2.6rem);line-height:1.05;margin:0}
+.info .summary{font-family:var(--serif);font-style:italic;font-size:1.15rem;margin:0;color:var(--ink)}
+.info .pricebox{display:flex;justify-content:space-between;align-items:center;gap:10px;background:var(--paper-2);border-radius:14px;padding:12px 16px}
+.info .pricebox b{font-size:1.15rem}
+.info .desc p{margin:0 0 10px;color:var(--muted);font-size:.97rem}
+.info .dl{display:flex;flex-wrap:wrap;gap:6px}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:auto;padding-top:10px}
+.x{position:absolute;top:14px;right:14px;z-index:3;width:42px;height:42px;border-radius:50%;border:0;background:rgba(255,255,255,.9);color:#0A1B47;cursor:pointer;font-size:1.4rem;line-height:1;display:grid;place-items:center;transition:transform .25s}
+.x:hover{transform:rotate(90deg)}
+
+/* FORM */
+.form-sheet{grid-template-columns:1fr;width:min(680px,100%)}
+.form{padding:30px;overflow-y:auto;display:grid;gap:16px}
+.form h2{font-family:var(--serif);font-weight:500;font-size:2rem;margin:0}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label.f{display:grid;gap:6px;font-weight:600;font-size:.9rem}
+label.f small{font-weight:400;color:var(--muted)}
+.f input,.f select,.f textarea{font:inherit;font-weight:400;font-size:1rem;color:var(--ink);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:11px 13px;width:100%}
+.f textarea{resize:vertical;min-height:90px}
+.f input:focus,.f select:focus,.f textarea:focus{outline:2px solid var(--maiolica);outline-offset:1px}
+.drop{border:2px dashed var(--line);border-radius:16px;padding:18px;text-align:center;color:var(--muted);cursor:pointer;transition:border-color .2s,background .2s}
+.drop.over,.drop:hover{border-color:var(--maiolica);background:color-mix(in srgb,var(--maiolica) 6%,transparent)}
+.thumbs{display:flex;flex-wrap:wrap;gap:10px}
+.thumb{position:relative;width:96px;height:72px;border-radius:10px;overflow:hidden;background:var(--paper-2)}
+.thumb img{width:100%;height:100%;object-fit:cover}
+.thumb button{position:absolute;top:4px;right:4px;width:22px;height:22px;border-radius:50%;border:0;background:rgba(6,14,38,.75);color:#fff;cursor:pointer;font-size:.8rem;line-height:1}
+.form-actions{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.mode-note{font-size:.85rem;color:var(--muted);margin:0}
+
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));translate:-50% 20px;z-index:200;background:var(--ink);color:var(--paper);padding:12px 20px;border-radius:999px;font-weight:500;font-size:.95rem;opacity:0;pointer-events:none;transition:opacity .3s,translate .3s;max-width:calc(100% - 32px)}
+.toast.show{opacity:1;translate:-50% 0}
+
+@media (max-width:900px){
+  .hero .wrap{grid-template-columns:1fr;gap:36px}
+  .chapter{grid-template-columns:1fr;gap:22px;padding:44px 0}
+  .ch-side{position:static}
+  .tips{grid-template-columns:1fr}
+  .brow{grid-template-columns:1fr auto;gap:6px 12px}
+  .brow .track{grid-column:1/-1;grid-row:2}
+  .sheet{grid-template-columns:1fr;max-height:92vh;overflow-y:auto}
+  .gallery{min-height:0;aspect-ratio:4/3}
+  .info{overflow:visible}
+  .overlay{padding:12px;align-items:end}
+  .row2{grid-template-columns:1fr}
+}
+@media (max-width:520px){
+  body{font-size:16px}
+  .day{grid-template-columns:52px 1fr;gap:12px}
+  .day-n{font-size:2rem}
+  .grid{grid-template-columns:1fr 1fr;gap:10px}
+  .pbody{padding:10px 12px 12px}
+  .pbody p{display:none}
+  .add{min-height:160px}
+  .brand{font-size:1.2rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important;transition-delay:0s!important}
+  .reveal{opacity:1;transform:none}
+  html{scroll-behavior:auto}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a class="brand" href="#top">Itália, setembro</a>
+    <div class="nav-links">
+      <a href="#roteiro">Roteiro</a>
+      <a href="#hospedagem">Hospedagem</a>
+      <a href="#orcamento">Orçamento</a>
+      <a href="#checklist">Checklist</a>
+      <a href="#dicas">Dicas</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <div class="wrap">
+    <div>
+      <p class="who">Você, sua mãe e uma criança de 11 anos</p>
+      <h1 class="title" aria-label="Itália"><span aria-hidden="true" id="titleLetters"></span></h1>
+      <p class="title-2">vinte e poucos dias em setembro</p>
+      <p class="goal">Os principais lugares do país num ritmo confortável: história, paisagens, praia, comida boa e experiências que também façam sentido para uma criança.</p>
+      <dl class="facts">
+        <div class="fact"><dt>Duração</dt><dd>22–23 dias</dd></div>
+        <div class="fact"><dt>Estilo</dt><dd>Confortável, sem luxo</dd></div>
+        <div class="fact"><dt>Transporte</dt><dd>Trem, barco e transporte público</dd></div>
+        <div class="fact"><dt>Planejamento</dt><dd>2029/2030</dd></div>
+        <div class="fact money"><dt>Meta para os 3</dt><dd>R$ 55–60 mil</dd></div>
+      </dl>
+    </div>
+    <div class="mapcard tiles">
+      <h2>O caminho</h2>
+      <p>Toque numa cidade para ir ao trecho do roteiro.</p>
+      <svg class="route" id="route" viewBox="0 0 440 500" role="group" aria-label="Mapa do roteiro"></svg>
+      <div class="legend">
+        <span><i></i>Trem entre bases</span>
+        <span><i class="dash"></i>Trecho longo</span>
+        <span><i class="spurl"></i>Bate-volta</span>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="roteiro" style="padding-top:24px">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Roteiro dia a dia</h2>
+        <p>Roma → Toscana → Cinque Terre → Veneza → norte → Nápoles → Costa Amalfitana. A Sicília fica para uma viagem própria de 10–14 dias.</p>
+      </div>
+      <div id="chapters"></div>
+    </div>
+  </section>
+
+  <section id="hospedagem">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Onde ficar</h2>
+        <p>Bases recomendadas, com quarto triplo e boa localização.</p>
+      </div>
+      <div class="table-wrap reveal">
+        <table>
+          <thead><tr><th>Cidade</th><th>Noites</th><th>Estratégia</th></tr></thead>
+          <tbody id="stayRows"></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <section id="orcamento">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Orçamento para 3</h2>
+        <p>Faixas estimadas por categoria. A barra mostra do mínimo ao máximo.</p>
+      </div>
+      <div class="budget reveal" id="budget"></div>
+      <div class="total tiles reveal">
+        <span class="t1">Meta recomendada</span>
+        <span class="t2">R$ 55.000–60.000</span>
+      </div>
+      <p class="fine">Valores são metas de planejamento para 2029/2030, não cotações futuras. Vale manter uma reserva adicional além da meta.</p>
+    </div>
+  </section>
+
+  <section id="checklist">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Checklist</h2>
+        <div class="progress"><div class="bar"><i id="progBar"></i></div><span id="progText">0 de 0</span></div>
+      </div>
+      <div class="checks reveal" id="checks"></div>
+    </div>
+  </section>
+
+  <section id="dicas">
+    <div class="wrap">
+      <div class="sec-head reveal">
+        <h2>Para lembrar</h2>
+      </div>
+      <div class="tips" id="tips"></div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p class="sig">Buon viaggio.</p>
+    <p id="saveMode">Plano-base pensado para uma viagem em família, com conforto, variedade e tempo para aproveitar cada região.</p>
+  </div>
+</footer>
+
+<!-- Place viewer -->
+<div class="overlay" id="viewer" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="vTitle">
+    <button class="x" data-close aria-label="Fechar">×</button>
+    <div class="gallery" id="vGallery"></div>
+    <div class="info" id="vInfo"></div>
+  </div>
+</div>
+
+<!-- Place editor -->
+<div class="overlay" id="editor" hidden>
+  <div class="sheet form-sheet" role="dialog" aria-modal="true" aria-labelledby="eTitle">
+    <button class="x" data-close aria-label="Fechar">×</button>
+    <form class="form" id="placeForm" novalidate>
+      <h2 id="eTitle">Novo lugar</h2>
+      <div class="row2">
+        <label class="f">Trecho da viagem<select name="chapter" id="fChapter"></select></label>
+        <label class="f">Tipo<select name="type">
+          <option>Hospedagem</option><option>Atração</option><option>Restaurante</option><option>Experiência</option><option>Outro</option>
+        </select></label>
+      </div>
+      <label class="f">Nome<input name="name" required maxlength="120" placeholder="Ex.: Vatican Rooftop"></label>
+      <div class="row2">
+        <label class="f">Resumo <small>uma frase</small><input name="summary" maxlength="200" placeholder="Ex.: Terraço com vista para São Pedro"></label>
+        <label class="f">Preço <small>opcional</small><input name="price" maxlength="80" placeholder="Ex.: R$ 3.871 (4 noites)"></label>
+      </div>
+      <label class="f">Link<input name="link" type="url" placeholder="https://"></label>
+      <label class="f">Descrição<textarea name="description" rows="5" placeholder="Informações, observações, horários…"></textarea></label>
+      <label class="f">Destaques <small>um por linha (aparecem como etiquetas)</small><textarea name="details" rows="3" placeholder="4 hóspedes&#10;Ar-condicionado&#10;Terraço privativo"></textarea></label>
+      <div class="f" style="display:grid;gap:8px">
+        <span style="font-weight:600;font-size:.9rem">Fotos</span>
+        <div class="drop" id="drop" tabindex="0" role="button">Arraste imagens aqui ou clique para escolher</div>
+        <input type="file" id="fileInput" accept="image/*" multiple hidden>
+        <div class="thumbs" id="thumbs"></div>
+      </div>
+      <p class="mode-note" id="modeNote"></p>
+      <div class="form-actions">
+        <div><button type="button" class="btn danger" id="delBtn" hidden>Excluir lugar</button></div>
+        <div style="display:flex;gap:10px">
+          <button type="button" class="btn ghost" data-close>Cancelar</button>
+          <button type="submit" class="btn" id="saveBtn">Salvar lugar</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+"use strict";
+const $ = (s, r = document) => r.querySelector(s);
+const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* ---------- DATA ---------- */
+const CHAPTERS = [
+  { id:"roma", title:"Roma", sub:"Roma Antiga, Vaticano e piazzas", days:"Dias 1–5", base:"Roma", nights:5,
+    stay:"Prati, Monti ou área bem localizada próxima ao metrô.",
+    items:[
+      {d:1,t:"Chegada",s:["Brasil → Roma","Check-in","Jantar perto do hotel","Descanso"],n:"Sem passeio pesado no primeiro dia."},
+      {d:2,t:"Roma Antiga",s:["Coliseu","Fórum Romano","Palatino","Piazza Venezia","Fontana di Trevi"]},
+      {d:3,t:"Vaticano",s:["Praça de São Pedro","Basílica de São Pedro","Museus Vaticanos","Capela Sistina"],n:"Para a criança, visita objetiva e sem excesso de horas."},
+      {d:4,t:"Roma leve",s:["Villa Borghese","Piazza di Spagna","Pantheon","Piazza Navona","Gelato","Trastevere"]},
+      {d:5,t:"Dia livre",s:["Compras","Parque","Museu","Descanso","Repetir um lugar favorito"]}
+    ]},
+  { id:"toscana", title:"Florença", sub:"Florença, Toscana e Pisa", days:"Dias 6–9", base:"Florença", nights:3,
+    stay:"Centro histórico ou Santa Maria Novella.",
+    items:[
+      {d:6,t:"Centro histórico",s:["Trem Roma → Florença","Duomo","Piazza del Duomo","Piazza della Signoria","Ponte Vecchio"]},
+      {d:7,t:"Arte e cidade",s:["Uffizi ou Accademia","Mercado Central","Santa Croce","Piazzale Michelangelo"],n:"Escolher apenas um grande museu."},
+      {d:8,t:"Toscana e vendemmia",s:["Vinícola family-friendly","Vinhas","Colheita de uvas, se disponível","Degustação para adultos","Almoço típico"]},
+      {d:9,t:"Pisa, bate-volta",s:["Florença → Pisa","Torre inclinada","Piazza dei Miracoli","Catedral","Retorno a Florença"]}
+    ]},
+  { id:"cinque", title:"Cinque Terre", sub:"Cinco vilas sobre o mar", days:"Dias 10–11", base:"La Spezia", nights:2,
+    stay:"Base prática e normalmente mais econômica para Cinque Terre.",
+    items:[
+      {d:10,t:"Riomaggiore e Manarola",s:["Trem a partir de La Spezia","Riomaggiore","Manarola"],n:"Passeio tranquilo e tempo para fotos."},
+      {d:11,t:"Vernazza e Monterosso",s:["Corniglia","Vernazza","Monterosso","Praia em Monterosso"]}
+    ]},
+  { id:"veneza", title:"Veneza", sub:"Canais, ilhas e vaporetto", days:"Dias 12–14", base:"Veneza", nights:3,
+    stay:"Veneza propriamente dita se o orçamento permitir; Mestre para economizar.",
+    items:[
+      {d:12,t:"Veneza clássica",s:["Piazza San Marco","Basílica de São Marcos","Palácio Ducal","Ponte dos Suspiros","Rialto"]},
+      {d:13,t:"Veneza sem pressa",s:["Vaporetto","Cannaregio","Dorsoduro","Canais","Cafés","Gelato"]},
+      {d:14,t:"Murano e Burano",s:["Murano e o vidro","Burano e as casas coloridas"],n:"Dia mais leve."}
+    ]},
+  { id:"norte", title:"Milão", sub:"Verona, Milão e Lago di Como", days:"Dias 15–17", base:"Milão", nights:2,
+    stay:"Centro/Brera ou região próxima ao transporte.",
+    items:[
+      {d:15,t:"Verona",s:["Arena di Verona","Piazza delle Erbe","Casa de Julieta","Centro histórico","Verona → Milão"]},
+      {d:16,t:"Milão",s:["Duomo","Galleria Vittorio Emanuele II","Castelo Sforzesco","Brera"]},
+      {d:17,t:"Lago di Como",s:["Bate-volta de Milão","Passeio de barco pelo lago","Retorno a Milão"]}
+    ]},
+  { id:"napoles", title:"Nápoles", sub:"Nápoles e Pompeia", days:"Dias 18–19", base:"Nápoles", nights:2,
+    stay:"Área bem localizada e com boas avaliações de segurança.",
+    items:[
+      {d:18,t:"Nápoles",s:["Centro Histórico","Via dei Tribunali","Spaccanapoli","Duomo di Napoli","Pizza napolitana","Tocar o nariz do Pulcinella"]},
+      {d:19,t:"Pompeia",s:["Nápoles → Pompeia","Visita guiada curta e family-friendly","Retorno a Nápoles"]}
+    ]},
+  { id:"amalfi", title:"Costa Amalfitana", sub:"Amalfi, Ravello e Positano", days:"Dias 20–21", base:"Amalfi", nights:2,
+    stay:"Base para Ravello, Positano e passeio de barco.",
+    items:[
+      {d:20,t:"Amalfi e Ravello",s:["Duomo di Amalfi","Centro","Praia","Ravello","Villa Rufolo","Villa Cimbrone","Terrazza dell'Infinito"]},
+      {d:21,t:"Positano e barco",s:["Amalfi → Positano","Passeio de barco","Retorno a Amalfi"],n:"Um dos dias mais leves e especiais da viagem."}
+    ]},
+  { id:"retorno", title:"Retorno", sub:"De volta ao Brasil", days:"Dias 22–23", base:null,
+    items:[
+      {d:22,t:"Deslocamento",s:["Amalfi → aeroporto ou cidade de saída"],n:"Idealmente, uma noite de segurança antes do voo internacional."},
+      {d:23,t:"Brasil",s:["Voo de retorno"],n:"A duração final pode ser ajustada conforme os horários das passagens."}
+    ]}
+];
+
+const BUDGET = [
+  ["Passagens aéreas",12000,18000],["Hospedagem",13000,18000],["Alimentação",6300,9500],
+  ["Transporte",4000,5500],["Passeios e ingressos",3500,5000],["Seguro e documentos",1000,1500],["Extras e emergências",5000,7000]
+];
+
+const CHECKS = [
+  "Passaportes válidos para os 3","Verificar regras de entrada na Europa/Schengen perto da viagem","Verificar ETIAS quando a viagem estiver próxima",
+  "Seguro viagem para os 3","Passagens internacionais — preferir multi-city/open jaw","Reservar hotéis com quarto triplo e boa localização",
+  "Comprar trens com antecedência quando abrir a venda","Reservar Vaticano, Coliseu, Pompeia e atrações concorridas","Reservar experiência na Toscana/vendemmia",
+  "Planejar transporte de Cinque Terre","Reservar passeio de barco na Costa Amalfitana","Separar dinheiro/cartão para emergências",
+  "eSIM/chip internacional","Adaptador de tomada","Conferir política de bagagem das companhias aéreas"
+];
+
+/* ---------- HERO ---------- */
+const word = "Itália";
+$("#titleLetters").innerHTML = [...word].map((c,i)=>`<span class="l" style="animation-delay:${.08*i}s">${c}</span>`).join("");
+
+const STOPS = [
+  {id:"roma",name:"Roma",x:234,y:343,ch:"roma",d:"dias 1–5",lx:14,ly:5,base:1},
+  {id:"florenca",name:"Florença",x:166,y:205,ch:"toscana",d:"dias 6–8",lx:14,ly:2,base:1},
+  {id:"pisa",name:"Pisa",x:118,y:222,ch:"toscana",d:"dia 9",lx:-12,ly:16,a:"end"},
+  {id:"cinque",name:"Cinque Terre",x:80,y:180,ch:"cinque",d:"dias 10–11",lx:0,ly:-26,a:"middle",base:1},
+  {id:"veneza",name:"Veneza",x:228,y:84,ch:"veneza",d:"dias 12–14",lx:14,ly:5,base:1},
+  {id:"verona",name:"Verona",x:152,y:84,ch:"norte",d:"dia 15",lx:0,ly:-24,a:"middle"},
+  {id:"milao",name:"Milão",x:56,y:86,ch:"norte",d:"dias 15–17",lx:0,ly:26,a:"middle",base:1},
+  {id:"como",name:"Como",x:44,y:44,ch:"norte",d:"dia 17",lx:14,ly:-2},
+  {id:"napoles",name:"Nápoles",x:318,y:404,ch:"napoles",d:"dias 18–19",lx:-14,ly:4,a:"end",base:1},
+  {id:"pompeia",name:"Pompeia",x:356,y:412,ch:"napoles",d:"dia 19",lx:12,ly:-8},
+  {id:"amalfi",name:"Amalfi",x:374,y:452,ch:"amalfi",d:"dias 20–21",lx:12,ly:12,base:1},
+  {id:"positano",name:"Positano",x:330,y:468,ch:"amalfi",d:"dia 21",lx:-12,ly:6,a:"end"}
+];
+const P = id => STOPS.find(s=>s.id===id);
+const svg = $("#route");
+const NS = "http://www.w3.org/2000/svg";
+const mk = (tag, attrs) => { const e = document.createElementNS(NS, tag); for (const k in attrs) e.setAttribute(k, attrs[k]); return e; };
+
+// graticule
+for (let i=1;i<9;i++) svg.appendChild(mk("line",{x1:0,x2:440,y1:i*55,y2:i*55,stroke:"#fff","stroke-opacity":".06"}));
+for (let i=1;i<8;i++) svg.appendChild(mk("line",{y1:0,y2:500,x1:i*55,x2:i*55,stroke:"#fff","stroke-opacity":".06"}));
+
+const r=P("roma"),f=P("florenca"),c=P("cinque"),v=P("veneza"),vr=P("verona"),m=P("milao"),n=P("napoles"),a=P("amalfi");
+const dMain1 = `M${r.x},${r.y} Q 186,290 ${f.x},${f.y} Q 120,170 ${c.x},${c.y} Q 236,190 ${v.x},${v.y} Q 190,98 ${vr.x},${vr.y} Q 104,72 ${m.x},${m.y}`;
+const dLong  = `M${m.x},${m.y} C 150,170 420,230 ${n.x},${n.y}`;
+const dMain2 = `M${n.x},${n.y} Q 360,430 ${a.x},${a.y}`;
+const spurs = [["florenca","pisa"],["milao","como"],["napoles","pompeia"],["amalfi","positano"]];
+spurs.forEach(([p,q])=>{const A=P(p),B=P(q);svg.appendChild(mk("path",{class:"spur",d:`M${A.x},${A.y} L${B.x},${B.y}`}))});
+const pLong = mk("path",{class:"long",d:dLong});
+const pMain1 = mk("path",{class:"main",d:dMain1});
+const pMain2 = mk("path",{class:"main",d:dMain2});
+svg.append(pLong,pMain1,pMain2);
+const trainPath = mk("path",{d:`${dMain1} C 150,170 420,230 ${n.x},${n.y} Q 360,430 ${a.x},${a.y}`,fill:"none",stroke:"none"});
+svg.appendChild(trainPath);
+
+const stopEls = STOPS.map(s=>{
+  const g = mk("g",{class:"stop"+(s.base?" base":""),tabindex:"0",role:"link","aria-label":`${s.name}, ${s.d}`});
+  g.appendChild(mk("circle",{class:"ring",cx:s.x,cy:s.y,r:s.base?7:5}));
+  const t = mk("text",{x:s.x+s.lx,y:s.y+s.ly,"text-anchor":s.a||"start"}); t.textContent=s.name;
+  const t2 = mk("text",{class:"d",x:s.x+s.lx,y:s.y+s.ly+13,"text-anchor":s.a||"start"}); t2.textContent=s.d;
+  g.append(t,t2);
+  const go = () => document.getElementById("ch-"+s.ch)?.scrollIntoView({behavior: reduce?"auto":"smooth"});
+  g.addEventListener("click",go);
+  g.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();go();}});
+  svg.appendChild(g); return g;
+});
+const train = mk("circle",{class:"train",r:4.5,cx:r.x,cy:r.y,opacity:0}); svg.appendChild(train);
+
+function drawRoute(){
+  const animate = (p, dur, delay) => {
+    const L = p.getTotalLength();
+    p.style.strokeDasharray = L; p.style.strokeDashoffset = reduce ? 0 : L;
+    if (!reduce) { p.getBoundingClientRect(); p.style.transition = `stroke-dashoffset ${dur}s cubic-bezier(.6,.1,.3,1) ${delay}s`; p.style.strokeDashoffset = 0; }
+  };
+  animate(pMain1, 2.2, .5); animate(pMain2, .6, 2.9);
+  setTimeout(()=>svg.classList.add("drawn"), reduce?0:2500);
+  const order = ["roma","florenca","pisa","cinque","veneza","verona","milao","como","napoles","pompeia","amalfi","positano"];
+  order.forEach((id,i)=>{ setTimeout(()=>stopEls[STOPS.findIndex(s=>s.id===id)].classList.add("on"), reduce?0:500+i*230); });
+  if (!reduce) {
+    const L = trainPath.getTotalLength(); let t0 = null;
+    setTimeout(()=>{ train.setAttribute("opacity",1);
+      const tick = ts => { if(!t0) t0 = ts; const k = ((ts-t0)/16000)%1; const pt = trainPath.getPointAtLength(k*L); train.setAttribute("cx",pt.x); train.setAttribute("cy",pt.y); requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    }, 3400);
+  }
+}
+drawRoute();
+
+/* ---------- CHAPTERS ---------- */
+$("#chapters").innerHTML = CHAPTERS.map(ch => `
+  <article class="chapter reveal" id="ch-${ch.id}">
+    <div class="ch-side">
+      <span class="ch-days">${ch.days}</span>
+      <h3 class="ch-title">${esc(ch.title)}</h3>
+      <p class="ch-sub">${esc(ch.sub)}</p>
+      ${ch.base ? `<div class="ch-base"><b>Base: ${esc(ch.base)} · ${ch.nights} noites</b><br>${esc(ch.stay)}</div>` : `<div class="ch-base">Ajuste conforme os horários dos voos.</div>`}
+    </div>
+    <div>
+      <ol class="days">
+        ${ch.items.map(it=>`
+          <li class="day">
+            <div class="day-n"><small>Dia</small>${it.d}</div>
+            <div>
+              <h3>${esc(it.t)}</h3>
+              <div class="chips">${it.s.map(x=>`<span class="chip">${esc(x)}</span>`).join("")}</div>
+              ${it.n?`<p class="note">${esc(it.n)}</p>`:""}
+            </div>
+          </li>`).join("")}
+      </ol>
+      ${ch.id!=="retorno" ? `
+      <div class="places-head"><h3>Lugares salvos<span class="count" id="count-${ch.id}"></span></h3></div>
+      <div class="grid" id="places-${ch.id}"><p class="empty-note">Carregando lugares…</p></div>` : ""}
+    </div>
+  </article>`).join("");
+
+$("#fChapter").innerHTML = CHAPTERS.filter(c=>c.id!=="retorno").map(c=>`<option value="${c.id}">${esc(c.title)} — ${esc(c.sub)}</option>`).join("");
+
+/* ---------- STAY ---------- */
+$("#stayRows").innerHTML = CHAPTERS.filter(c=>c.base).map(c=>`<tr><td class="city">${esc(c.base)}</td><td class="n">${c.nights}</td><td>${esc(c.stay)}</td></tr>`).join("");
+
+/* ---------- BUDGET ---------- */
+const brl = v => "R$ " + v.toLocaleString("pt-BR");
+const MAXB = 20000;
+$("#budget").innerHTML = BUDGET.map(([l,a,b])=>`
+  <div class="brow"><span class="lbl">${l}</span>
+  <div class="track"><span class="fill" data-l="${a/MAXB*100}" data-w="${(b-a)/MAXB*100}" data-full="${b/MAXB*100}"></span></div>
+  <span class="val">${brl(a)}–${brl(b).replace("R$ ","")}</span></div>`).join("");
+function fillBudget(){
+  $$(".fill").forEach((el,i)=>{ setTimeout(()=>{ el.style.left="0%"; el.style.width=el.dataset.full+"%"; el.style.background=`linear-gradient(90deg, color-mix(in srgb,var(--maiolica) 35%,transparent) 0 ${(+el.dataset.l)/(+el.dataset.full)*100}%, var(--maiolica) ${(+el.dataset.l)/(+el.dataset.full)*100}% 100%)`; }, reduce?0:i*90); });
+}
+
+/* ---------- TIPS ---------- */
+$("#tips").innerHTML = `
+  <div class="tip reveal">
+    <h3>Pensando na criança</h3>
+    <p class="sub">Priorizar</p>
+    <div class="chips">${["Praia em Monterosso","Gelato","Veneza","Murano e Burano","Passeio de barco","Lago di Como","Pompeia em visita curta","Pizza em Nápoles","Toscana para famílias"].map(x=>`<span class="chip">${x}</span>`).join("")}</div>
+    <p class="sub">Evitar</p>
+    <div class="chips">${["Muitos museus no mesmo dia","Troca diária de hotel","Roteiro sem pausas","Deslocamentos excessivos"].map(x=>`<span class="chip">${x}</span>`).join("")}</div>
+  </div>
+  <div class="tip reveal">
+    <h3>Prioridades</h3>
+    <ol class="prio">${["Roma e Vaticano","Florença e Toscana","Veneza","Costa Amalfitana, Ravello e Positano","Nápoles e Pompeia","Cinque Terre","Milão e Lago di Como","Verona e Pisa como bate-voltas"].map(x=>`<li>${x}</li>`).join("")}</ol>
+  </div>
+  <div class="tip reveal">
+    <h3>Transporte</h3>
+    <p>Trem entre as grandes cidades e em Cinque Terre. Vaporetto em Veneza. Na Costa Amalfitana, combinar ônibus, barco e transfers.</p>
+    <p>Não vale alugar carro ou moto para a viagem inteira.</p>
+  </div>
+  <div class="tip reveal">
+    <h3>Comida</h3>
+    <p>Meta prática de R$ 300–450 por dia para os três. Almoço mais simples, alguns jantares especiais.</p>
+    <p>Confira o <em>coperto</em> no cardápio antes de sentar. Gorjeta não funciona como nos EUA: os 15–20% não são obrigatórios.</p>
+  </div>`;
+
+/* ---------- REVEAL + NAV ---------- */
+const io = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add("in"); if(e.target.id==="budget") fillBudget(); io.unobserve(e.target);} }),{threshold:.12, rootMargin:"0px 0px -40px 0px"});
+$$(".reveal").forEach(el=>io.observe(el));
+const nav = $("#nav");
+addEventListener("scroll",()=>nav.classList.toggle("scrolled",scrollY>10),{passive:true});
+const navLinks = $$(".nav-links a");
+const secIO = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting){ navLinks.forEach(a=>a.classList.toggle("active",a.getAttribute("href")==="#"+e.target.id)); } }),{rootMargin:"-45% 0px -50% 0px"});
+$$("main section").forEach(s=>secIO.observe(s));
+
+/* ---------- TOAST ---------- */
+let toastT;
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove("show"),3200); }
+
+/* ---------- STORE ---------- */
+let mode = "loading", db = null, assets = null, canWrite = true;
+let places = [], checked = {};
+const LS_P = "italia-places", LS_C = "italia-checks";
+const lsGet = (k, d) => { try { const v = localStorage.getItem(k); return v ? JSON.parse(v) : d; } catch { return d; } };
+const lsSet = (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); return true; } catch { return false; } };
+
+function useLocal(){
+  mode = "local"; places = lsGet(LS_P, []); checked = lsGet(LS_C, {});
+  $("#modeNote").textContent = "Neste modo, os lugares ficam salvos só neste navegador.";
+  renderPlaces(); renderChecks();
+}
+async function initStore(){
+  const hasUse = window.claude && typeof window.claude.use === "function";
+  if (!hasUse) return useLocal();
+  try { db = await window.claude.use("db"); } catch { db = null; }
+  if (!db) return useLocal();
+  mode = "db";
+  $("#modeNote").textContent = "";
+  try { const user = await window.claude.use("user"); if (user && typeof user.can === "function") { const c = await user.can("data.write"); if (c === false) canWrite = false; } } catch {}
+  try { assets = await window.claude.use("assets"); } catch { assets = null; }
+  db.collection("places").onSnapshot(snap => {
+    places = snap.docs.map(d => ({ id:d.id, ...d.data() }));
+    renderPlaces();
+  }, err => { toast("Não foi possível carregar os lugares."); places = []; renderPlaces(); });
+  db.doc("meta/checklist").onSnapshot(s => { checked = (s.exists && s.data()?.checked) || {}; renderChecks(); }, () => {});
+}
+function onWriteError(e){
+  if (e && (e.code === "not_granted" || e.code === "revoked")) { canWrite = false; renderPlaces(); toast("Esta visualização é somente leitura."); }
+  else if (e && e.code === "quota_exceeded") toast("Espaço de armazenamento cheio.");
+  else toast("Não foi possível salvar. Tente de novo.");
+}
+const imgSrc = ref => (ref.startsWith("data:") || ref.startsWith("/_blob/") || ref.startsWith("blob:")) ? ref : "/_blob/" + ref;
+
+/* ---------- PLACES ---------- */
+function cardHTML(p){
+  const imgs = p.images || [];
+  const media = imgs.length
+    ? `<img src="${esc(imgSrc(imgs[0]))}" alt="" loading="lazy">${imgs.length>1?`<span class="nimg">${imgs.length} fotos</span>`:""}`
+    : `<div class="ph tiles"><span>${esc((p.name||"?").trim()[0]||"?")}</span></div>`;
+  return `<button class="place" data-id="${esc(p.id)}">
+    <div class="media">${media}</div>
+    <div class="pbody"><span class="tag t-${esc(p.type)}">${esc(p.type||"Lugar")}</span><h4>${esc(p.name)}</h4>${p.summary?`<p>${esc(p.summary)}</p>`:""}${p.price?`<span class="price">${esc(p.price)}</span>`:""}</div>
+  </button>`;
+}
+function renderPlaces(){
+  CHAPTERS.filter(c=>c.id!=="retorno").forEach(ch=>{
+    const grid = document.getElementById("places-"+ch.id); if (!grid) return;
+    const list = places.filter(p=>p.chapter===ch.id).sort((a,b)=>(a.createdAt||0)-(b.createdAt||0));
+    $("#count-"+ch.id).textContent = list.length ? String(list.length) : "";
+    let html = list.map(cardHTML).join("");
+    if (canWrite) html += `<button class="add" data-chapter="${ch.id}"><span><span class="plus">+</span>Adicionar lugar em ${esc(ch.title)}</span></button>`;
+    else if (!list.length) html = `<p class="empty-note">Nenhum lugar salvo ainda.</p>`;
+    grid.innerHTML = html;
+  });
+}
+document.addEventListener("click", e=>{
+  const card = e.target.closest(".place"); if (card) return openViewer(card.dataset.id, card);
+  const add = e.target.closest(".add"); if (add) return openEditor(null, add.dataset.chapter, add);
+});
+
+/* ---------- OVERLAYS ---------- */
+let lastFocus = null;
+function showOverlay(ov, origin){
+  lastFocus = document.activeElement;
+  ov.hidden = false;
+  const sheet = $(".sheet", ov);
+  if (origin) { const o = origin.getBoundingClientRect(), s = sheet.getBoundingClientRect();
+    sheet.style.transformOrigin = `${o.left + o.width/2 - s.left}px ${o.top + o.height/2 - s.top}px`; }
+  requestAnimationFrame(()=>requestAnimationFrame(()=>ov.classList.add("open")));
+  document.body.style.overflow = "hidden";
+  setTimeout(()=>$(".x", ov).focus({preventScroll:true}), 50);
+}
+function hideOverlay(ov){
+  if (ov.hidden) return;
+  ov.classList.remove("open");
+  setTimeout(()=>{ ov.hidden = true; if (!$$(".overlay").some(o=>!o.hidden)) document.body.style.overflow = ""; lastFocus?.focus?.({preventScroll:true}); }, reduce?0:380);
+}
+$$(".overlay").forEach(ov=>{
+  ov.addEventListener("click", e=>{ if (e.target === ov || e.target.closest("[data-close]")) hideOverlay(ov); });
+});
+document.addEventListener("keydown", e=>{
+  const open = $$(".overlay").filter(o=>!o.hidden).pop(); if (!open) return;
+  if (e.key === "Escape") hideOverlay(open);
+  if (open.id === "viewer" && e.target.tagName !== "INPUT") { if (e.key === "ArrowRight") step(1); if (e.key === "ArrowLeft") step(-1); }
+  if (e.key === "Tab") { const f = $$("button,a[href],input,select,textarea,[tabindex='0']", open).filter(x=>!x.hidden && x.offsetParent!==null); if (!f.length) return;
+    if (e.shiftKey && document.activeElement === f[0]) { e.preventDefault(); f[f.length-1].focus(); }
+    else if (!e.shiftKey && document.activeElement === f[f.length-1]) { e.preventDefault(); f[0].focus(); } }
+});
+
+/* viewer */
+let gIdx = 0, gLen = 0, viewingId = null;
+function step(d){ if (gLen < 2) return; gIdx = (gIdx + d + gLen) % gLen; paintGallery(); }
+function paintGallery(){
+  $$("#vGallery .slide").forEach((s,i)=>s.classList.toggle("active", i===gIdx));
+  $$("#vGallery .dots i").forEach((s,i)=>s.classList.toggle("on", i===gIdx));
+  const c = $("#vGallery .gcount"); if (c) c.textContent = `${gIdx+1} / ${gLen}`;
+}
+function openViewer(id, origin){
+  const p = places.find(x=>x.id===id); if (!p) return;
+  viewingId = id;
+  const ch = CHAPTERS.find(c=>c.id===p.chapter);
+  const imgs = p.images || []; gIdx = 0; gLen = imgs.length;
+  $("#vGallery").innerHTML = imgs.length
+    ? imgs.map((r,i)=>`<div class="slide${i?"":" active"}"><img src="${esc(imgSrc(r))}" alt="${esc(p.name)} — foto ${i+1}"></div>`).join("") +
+      (imgs.length>1 ? `<button class="gnav prev" aria-label="Foto anterior">‹</button><button class="gnav next" aria-label="Próxima foto">›</button><span class="gcount">1 / ${imgs.length}</span><div class="dots">${imgs.map((_,i)=>`<i class="${i?"":"on"}"></i>`).join("")}</div>` : "")
+    : `<div class="ph tiles" style="position:absolute;inset:0"><span style="font-size:7rem">${esc((p.name||"?")[0])}</span></div>`;
+  const desc = (p.description||"").split(/\n\s*\n/).filter(Boolean).map(par=>`<p>${esc(par).replace(/\n/g,"<br>")}</p>`).join("");
+  const details = (p.details||[]).filter(Boolean);
+  $("#vInfo").innerHTML = `
+    <span class="tag t-${esc(p.type)}">${esc(p.type||"Lugar")}</span>
+    <p class="where">${esc(ch?.sub||"")}${ch?` · ${esc(ch.days)}`:""}</p>
+    <h2 id="vTitle">${esc(p.name)}</h2>
+    ${p.summary?`<p class="summary">${esc(p.summary)}</p>`:""}
+    ${p.price?`<div class="pricebox"><span>Preço</span><b>${esc(p.price)}</b></div>`:""}
+    ${details.length?`<div class="dl">${details.map(d=>`<span class="chip">${esc(d)}</span>`).join("")}</div>`:""}
+    ${desc?`<div class="desc">${desc}</div>`:""}
+    <div class="actions">
+      ${p.link?`<a class="btn" href="${esc(p.link)}" target="_blank" rel="noopener noreferrer">Abrir link</a>`:""}
+      ${canWrite?`<button class="btn ghost" id="editThis">Editar</button>`:""}
+    </div>`;
+  $("#vGallery .prev")?.addEventListener("click",()=>step(-1));
+  $("#vGallery .next")?.addEventListener("click",()=>step(1));
+  $("#editThis")?.addEventListener("click",()=>{ hideOverlay($("#viewer")); setTimeout(()=>openEditor(id, p.chapter), reduce?0:400); });
+  showOverlay($("#viewer"), origin);
+}
+// swipe
+(() => { let x0 = null; const g = $("#vGallery");
+  g.addEventListener("pointerdown", e=>{ x0 = e.clientX; });
+  g.addEventListener("pointerup", e=>{ if (x0===null) return; const dx = e.clientX - x0; if (Math.abs(dx) > 40) step(dx<0?1:-1); x0 = null; });
+})();
+
+/* editor */
+let editingId = null, formImgs = []; // {ref} existing or {file, url}
+const form = $("#placeForm");
+function openEditor(id, chapter, origin){
+  editingId = id; const p = id ? places.find(x=>x.id===id) : null;
+  form.reset();
+  $("#eTitle").textContent = p ? "Editar lugar" : "Novo lugar";
+  form.chapter.value = p?.chapter || chapter || "roma";
+  form.type.value = p?.type || "Atração";
+  form.name.value = p?.name || ""; form.summary.value = p?.summary || ""; form.price.value = p?.price || "";
+  form.link.value = p?.link || ""; form.description.value = p?.description || "";
+  form.details.value = (p?.details || []).join("\n");
+  formImgs = (p?.images || []).map(ref=>({ref}));
+  const del = $("#delBtn"); del.hidden = !p; del.textContent = "Excluir lugar"; del.dataset.arm = "";
+  paintThumbs();
+  showOverlay($("#editor"), origin);
+}
+function paintThumbs(){
+  $("#thumbs").innerHTML = formImgs.map((im,i)=>`<div class="thumb"><img src="${esc(im.url || imgSrc(im.ref))}" alt=""><button type="button" data-rm="${i}" aria-label="Remover foto">×</button></div>`).join("");
+}
+$("#thumbs").addEventListener("click", e=>{ const b = e.target.closest("[data-rm]"); if (!b) return; const im = formImgs.splice(+b.dataset.rm,1)[0]; if (im?.url) URL.revokeObjectURL(im.url); paintThumbs(); });
+const drop = $("#drop"), fileInput = $("#fileInput");
+drop.addEventListener("click", ()=>fileInput.click());
+drop.addEventListener("keydown", e=>{ if (e.key==="Enter"||e.key===" "){ e.preventDefault(); fileInput.click(); } });
+drop.addEventListener("dragover", e=>{ e.preventDefault(); drop.classList.add("over"); });
+drop.addEventListener("dragleave", ()=>drop.classList.remove("over"));
+drop.addEventListener("drop", e=>{ e.preventDefault(); drop.classList.remove("over"); addFiles(e.dataTransfer.files); });
+fileInput.addEventListener("change", ()=>{ addFiles(fileInput.files); fileInput.value=""; });
+function addFiles(list){
+  [...list].filter(f=>f.type.startsWith("image/")).slice(0, 12 - formImgs.length).forEach(file=>formImgs.push({file, url:URL.createObjectURL(file)}));
+  paintThumbs();
+}
+function compress(file, max, q){
+  return new Promise((res, rej)=>{
+    const img = new Image(); const u = URL.createObjectURL(file);
+    img.onload = () => { const k = Math.min(1, max/Math.max(img.width,img.height)); const cv = document.createElement("canvas");
+      cv.width = Math.round(img.width*k); cv.height = Math.round(img.height*k); cv.getContext("2d").drawImage(img,0,0,cv.width,cv.height);
+      URL.revokeObjectURL(u); cv.toBlob(b=>b?res(b):rej(new Error("blob")), "image/jpeg", q); };
+    img.onerror = () => { URL.revokeObjectURL(u); rej(new Error("img")); };
+    img.src = u;
+  });
+}
+const blobToData = b => new Promise(r=>{ const fr = new FileReader(); fr.onload = ()=>r(fr.result); fr.readAsDataURL(b); });
+
+form.addEventListener("submit", async e=>{
+  e.preventDefault();
+  const name = form.name.value.trim();
+  if (!name) { form.name.focus(); toast("Dê um nome ao lugar."); return; }
+  let link = form.link.value.trim(); if (link && !/^https?:\/\//i.test(link)) link = "https://" + link;
+  const btn = $("#saveBtn"); btn.disabled = true; btn.textContent = "Salvando…";
+  try {
+    const refs = [];
+    for (const im of formImgs) {
+      if (im.ref) { refs.push(im.ref); continue; }
+      if (mode === "db") {
+        if (!assets) { toast("Envio de fotos indisponível nesta visualização."); continue; }
+        const blob = await compress(im.file, 1800, .86);
+        const up = await assets.upload(blob); refs.push(up.id);
+      } else {
+        const blob = await compress(im.file, 1100, .78); refs.push(await blobToData(blob));
+      }
+    }
+    const old = editingId ? places.find(x=>x.id===editingId) : null;
+    const data = {
+      chapter: form.chapter.value, type: form.type.value, name,
+      summary: form.summary.value.trim(), price: form.price.value.trim(), link,
+      description: form.description.value.trim(),
+      details: form.details.value.split("\n").map(s=>s.trim()).filter(Boolean),
+      images: refs, createdAt: old?.createdAt || Date.now()
+    };
+    if (mode === "db") {
+      if (editingId) await db.doc("places/"+editingId).set(data); else await db.collection("places").add(data);
+    } else {
+      if (editingId) places = places.map(p=>p.id===editingId?{...data,id:editingId}:p);
+      else places.push({...data, id: "p"+Date.now().toString(36)});
+      if (!lsSet(LS_P, places.map(({...p})=>p))) { toast("Sem espaço no navegador. Use menos fotos."); return; }
+      renderPlaces();
+    }
+    formImgs.forEach(im=>im.url && URL.revokeObjectURL(im.url));
+    hideOverlay($("#editor"));
+    toast(editingId ? "Lugar atualizado." : "Lugar salvo.");
+    setTimeout(()=>document.getElementById("places-"+data.chapter)?.scrollIntoView({behavior:reduce?"auto":"smooth",block:"center"}), 450);
+  } catch (err) { onWriteError(err); }
+  finally { btn.disabled = false; btn.textContent = "Salvar lugar"; }
+});
+$("#delBtn").addEventListener("click", async ()=>{
+  const b = $("#delBtn");
+  if (!b.dataset.arm) { b.dataset.arm = "1"; b.textContent = "Confirmar exclusão"; return; }
+  try {
+    if (mode === "db") await db.doc("places/"+editingId).delete();
+    else { places = places.filter(p=>p.id!==editingId); lsSet(LS_P, places); renderPlaces(); }
+    hideOverlay($("#editor")); toast("Lugar excluído.");
+  } catch (err) { onWriteError(err); }
+});
+
+/* ---------- CHECKLIST ---------- */
+$("#checks").innerHTML = CHECKS.map((t,i)=>`<label class="check" data-i="${i}"><input type="checkbox" data-i="${i}"><span class="box"><svg viewBox="0 0 20 20"><path d="M4 10.5l4 4 8-9"/></svg></span><span class="ctext">${esc(t)}</span></label>`).join("");
+function renderChecks(){
+  let done = 0;
+  $$("#checks .check").forEach(el=>{ const on = !!checked[el.dataset.i]; if (on) done++; el.classList.toggle("done", on); $("input",el).checked = on; });
+  $("#progText").textContent = `${done} de ${CHECKS.length}`;
+  $("#progBar").style.width = (done/CHECKS.length*100) + "%";
+}
+$("#checks").addEventListener("change", async e=>{
+  const i = e.target.dataset.i; if (i === undefined) return;
+  const next = {...checked}; if (e.target.checked) next[i] = true; else delete next[i];
+  checked = next; renderChecks();
+  if (mode === "db") { try { await db.doc("meta/checklist").set({checked:next}); } catch (err) { onWriteError(err); } }
+  else lsSet(LS_C, next);
+});
+renderChecks();
+
+initStore();
+})();
+</script>
+</body>
+</html>
