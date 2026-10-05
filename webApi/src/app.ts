@@ -1,11 +1,26 @@
 import express from "express";
 import cors from "cors";
 import helmet from "helmet";
+import { Prisma } from "@prisma/client";
 
 import routes from "./modules/index.routes";
 import AppException from "@erros/app-exception";
 import ErrorMessages from "@erros/error-messages";
 import appConfig from "@config/app.config";
+
+// Códigos do Prisma para "não consegui falar com o banco": servidor
+// inalcançável (P1001), tempo esgotado ao conectar (P1002) e conexão fechada
+// pelo servidor (P1017).
+const CODIGOS_BANCO_INDISPONIVEL = ["P1001", "P1002", "P1017"];
+
+// Falha ao iniciar a conexão sem código, ou com um dos códigos acima, é
+// passageira (banco acordando). Com outro código é erro de configuração.
+function ehBancoIndisponivel(err: unknown): boolean {
+  if (err instanceof Prisma.PrismaClientInitializationError) {
+    return !err.errorCode || CODIGOS_BANCO_INDISPONIVEL.includes(err.errorCode);
+  }
+  return err instanceof Prisma.PrismaClientKnownRequestError && CODIGOS_BANCO_INDISPONIVEL.includes(err.code);
+}
 
 class App {
   public app: express.Application;
@@ -66,6 +81,17 @@ class App {
           // Qualquer outro 4xx vindo do Express: devolve o status dele, sem
           // registrar no log.
           res.status(status).json({ error: ErrorMessages.REQUISICAO_INVALIDA });
+        } else if (ehBancoIndisponivel(err)) {
+          // Banco suspenso ou conexão caída: quem chamou pode tentar de novo
+          // em instantes. Registra só o código, porque a mensagem do Prisma
+          // traz o endereço do banco.
+          console.error(`Banco indisponível (${err.errorCode ?? err.code ?? "sem código"})`);
+          res.status(503).set("Retry-After", "5").json({ error: ErrorMessages.BANCO_INDISPONIVEL });
+        } else if (err instanceof Prisma.PrismaClientInitializationError) {
+          // Senha recusada, banco inexistente, schema inválido: tentar de novo
+          // não resolve. Também aqui só o código vai para o log.
+          console.error(`Erro de configuração do banco (${err.errorCode})`);
+          res.status(500).json({ error: ErrorMessages.ERRO_INTERNO });
         } else {
           // Registra só a mensagem, nunca o corpo da requisição.
           console.error(err?.message ?? err);

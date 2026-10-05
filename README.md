@@ -122,6 +122,7 @@ Itens do checklist (`:itemId`): `passaportes`, `regras-schengen`, `etias`, `segu
 | `415` | tipo de arquivo não aceito, ou arquivo que não é uma imagem do tipo informado |
 | `429` | muitas requisições em pouco tempo, ou fotos demais enviadas e ainda não salvas |
 | `500` | erro interno |
+| `503` | banco indisponível ou ainda acordando; vem com `Retry-After` (tente de novo em segundos) |
 
 ## Limites e proteções
 
@@ -185,8 +186,13 @@ base, `@TryCatch()`).
 ## Publicar
 
 - **Banco:** Neon. Use a conexão *pooled* em `DATABASE_URL` (com `pgbouncer=true`) e a direta em `DIRECT_URL`.
-- **webApi:** qualquer host Node (ex: Render). `npm install && npm run build`, depois
-  `npm run prisma:deploy` e `npm start`. Defina `DATABASE_URL`, `DIRECT_URL` e `URL_FRONTEND`
+  O Neon gratuito suspende o banco após uns 5 minutos sem uso: a API sobe sem esperar por ele e
+  responde `503` (com `Retry-After`) enquanto ele acorda.
+- **webApi:** qualquer host Node (ex: Render). No Render, Root Directory `webApi`, Build Command
+  `npm install --include=dev && npm run build`, Start Command `npm start` e health check em
+  `/api/saude`. As migrações não rodam no build: aplique do seu computador, com
+  `npm run prisma:deploy` na pasta `webApi`, **antes do primeiro deploy** (e a cada nova
+  migração). Defina `DATABASE_URL`, `DIRECT_URL` e `URL_FRONTEND`
   (a URL do front, para o CORS). Atrás de um proxy defina também `PROXIES_CONFIAVEIS` (no Render,
   `1`), para o limite de requisições contar pelo IP de quem chamou e não pelo do proxy.
 - **webApp:** Vercel. Defina `API_URL` com a URL pública da API.

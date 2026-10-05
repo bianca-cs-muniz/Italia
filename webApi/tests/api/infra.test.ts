@@ -85,13 +85,11 @@ describe("rota inexistente", () => {
   });
 });
 
-// BUG CONHECIDO (código de produção, não corrigido aqui): estes 3 testes FALHAM.
 // Um `%` inválido num parâmetro de rota faz o Express lançar um URIError com
-// status 400, mas sem `expose`. O tratamento global (src/app.ts, linhas 51-60)
-// só reconhece erros do cliente quando `err.expose === true`, então a
-// requisição cai no ramo do 500: responde "Erro interno no servidor." e
-// escreve no log a cada chamada. Como o erro acontece ao casar a rota, antes
-// dos middlewares dela, o limite de requisições também não chega a contar.
+// status 400, ao casar a rota e antes dos middlewares dela. O tratamento
+// global (src/app.ts) reconhece esse erro como causado por quem enviou a
+// requisição: responde 4xx em JSON e não escreve no log. Estes testes já
+// falharam, quando o erro caía no ramo do 500; ficam como regressão.
 describe("endereço com codificação inválida (%)", () => {
   it.each([
     ["GET", "/api/fotos/%E0%A4%A"],

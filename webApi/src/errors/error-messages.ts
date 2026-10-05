@@ -5,6 +5,7 @@ export default {
   ENDERECO_INVALIDO: "Endereço inválido.",
   REQUISICAO_INVALIDA: "Requisição inválida.",
   MUITAS_REQUISICOES: "Muitas requisições em pouco tempo. Aguarde um minuto e tente de novo.",
+  BANCO_INDISPONIVEL: "O banco de dados está acordando. Tente de novo em alguns segundos.",
 
   LUGAR_NAO_ENCONTRADO: "Lugar não encontrado.",
   LIMITE_LUGARES: "O limite de lugares salvos foi atingido. Apague algum antes de adicionar outro.",
