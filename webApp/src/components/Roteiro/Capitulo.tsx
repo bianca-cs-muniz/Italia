@@ -5,6 +5,7 @@ import { ehTrechoId, ITrecho, TrechoId } from "@/dados/trechos";
 import { ILugar } from "@/services/lugares/lugares.service";
 import { classeRevelar, useRevelar } from "@/shared/components/useRevelar";
 import { GradeLugares } from "@/components/Lugares/GradeLugares";
+import { textoNoites } from "./regras";
 import { ArtigoCapitulo } from "./styles";
 
 interface ICapituloProps {
@@ -30,7 +31,8 @@ export const Capitulo = ({ trecho, lugares, carregandoLugares, aoAbrirLugar, aoA
         {trecho.base ? (
           <div className="ch-base">
             <b>
-              Base: {trecho.base} · {trecho.noites} noites
+              Base: {trecho.base}
+              {trecho.noites !== undefined && ` · ${textoNoites(trecho.noites)}`}
             </b>
             <br />
             {trecho.estadia}

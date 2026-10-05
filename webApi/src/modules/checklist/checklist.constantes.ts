@@ -13,6 +13,7 @@ export const ITENS_CHECKLIST = [
   "vendemmia",
   "transporte-cinque-terre",
   "barco-amalfi",
+  "carro-san-giovanni",
   "reserva-emergencia",
   "esim",
   "adaptador",

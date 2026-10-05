@@ -37,14 +37,24 @@ describe("calcularProgresso", () => {
     expect(calcularProgresso(["a"], [])).toEqual({ feitos: 0, total: 0, percentual: 0 });
   });
 
-  it("deve usar os 15 itens da viagem quando a lista não é informada", () => {
-    expect(calcularProgresso([]).total).toBe(15);
+  it("deve usar os 16 itens da viagem quando a lista não é informada", () => {
+    expect(calcularProgresso([]).total).toBe(16);
   });
 
   it("deve contar sobre os itens da viagem quando a lista não é informada", () => {
     const { feitos, percentual } = calcularProgresso([ITENS_CHECKLIST[0].id, ITENS_CHECKLIST[1].id, ITENS_CHECKLIST[2].id]);
 
     expect(feitos).toBe(3);
-    expect(percentual).toBe(20);
+    expect(percentual).toBe(18.75);
+  });
+
+  it("deve contar o item do carro de San Giovanni Rotondo entre os itens da viagem", () => {
+    expect(calcularProgresso(["carro-san-giovanni"])).toEqual({ feitos: 1, total: 16, percentual: 6.25 });
+  });
+
+  it("deve chegar a 100% quando os 16 itens da viagem estão marcados", () => {
+    const todos = ITENS_CHECKLIST.map((item) => item.id);
+
+    expect(calcularProgresso(todos)).toEqual({ feitos: 16, total: 16, percentual: 100 });
   });
 });

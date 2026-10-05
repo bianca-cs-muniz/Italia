@@ -48,6 +48,7 @@ export const Orcamento = () => {
         </Total>
         <p className="fine">
           Valores são metas de planejamento para 2029/2030, não cotações futuras. Vale manter uma reserva adicional além da meta.
+          Faixas calculadas para o roteiro anterior, de 22–23 dias; revisar para 25.
         </p>
       </div>
     </section>

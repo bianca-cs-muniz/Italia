@@ -7,9 +7,9 @@ import { Cabecalho } from "./styles";
 const TITULO = "Itália";
 
 const FATOS: { rotulo: string; valor: string; destaque?: boolean }[] = [
-  { rotulo: "Duração", valor: "22–23 dias" },
+  { rotulo: "Duração", valor: "25 dias" },
   { rotulo: "Estilo", valor: "Confortável, sem luxo" },
-  { rotulo: "Transporte", valor: "Trem, barco e transporte público" },
+  { rotulo: "Transporte", valor: "Trem, barco e um trecho de carro" },
   { rotulo: "Planejamento", valor: "2029/2030" },
   { rotulo: "Meta para os 3", valor: "R$ 55–60 mil", destaque: true },
 ];
@@ -30,10 +30,10 @@ export const Hero = () => {
               ))}
             </span>
           </h1>
-          <p className="title-2">vinte e poucos dias em setembro</p>
+          <p className="title-2">vinte e cinco dias em setembro</p>
           <p className="goal">
-            Os principais lugares do país num ritmo confortável: história, paisagens, praia, comida boa e experiências que também façam
-            sentido para uma criança.
+            Os principais lugares do país e quatro paradas de fé num ritmo confortável: história, paisagens, praia, comida boa e
+            experiências que também façam sentido para uma criança.
           </p>
           <dl className="facts">
             {FATOS.map((fato) => (
@@ -51,7 +51,7 @@ export const Hero = () => {
           <div className="legend">
             <span>
               <i />
-              Trem entre bases
+              Entre bases
             </span>
             <span>
               <i className="dash" />

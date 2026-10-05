@@ -16,6 +16,7 @@ const ITENS_DO_CONTRATO = [
   "vendemmia",
   "transporte-cinque-terre",
   "barco-amalfi",
+  "carro-san-giovanni",
   "reserva-emergencia",
   "esim",
   "adaptador",
@@ -92,10 +93,19 @@ describe("PUT /api/checklist/:itemId — marcar", () => {
     expect(await marcados()).toEqual([itemId]);
   });
 
-  it("deve permitir todos os 15 itens marcados ao mesmo tempo", async () => {
+  it("deve permitir todos os 16 itens marcados ao mesmo tempo", async () => {
     for (const itemId of ITENS_DO_CONTRATO) await marcar(itemId, true);
 
+    expect(ITENS_DO_CONTRATO).toHaveLength(16);
     expect(await marcados()).toEqual(ITENS_DO_CONTRATO);
+  });
+
+  it("deve marcar o item do carro de San Giovanni Rotondo", async () => {
+    const resposta = await marcar("carro-san-giovanni", true);
+
+    expect(resposta.status).toBe(200);
+    expect(resposta.body).toEqual({ itemId: "carro-san-giovanni", marcado: true });
+    expect(await marcados()).toEqual(["carro-san-giovanni"]);
   });
 });
 
@@ -137,6 +147,17 @@ describe("PUT /api/checklist/:itemId — desmarcar", () => {
     expect(await marcados()).toEqual(["esim"]);
   });
 
+  it("deve desmarcar o item do carro de San Giovanni Rotondo sem mexer nos demais", async () => {
+    await marcar("barco-amalfi", true);
+    await marcar("carro-san-giovanni", true);
+
+    const resposta = await marcar("carro-san-giovanni", false);
+
+    expect(resposta.status).toBe(200);
+    expect(resposta.body).toEqual({ itemId: "carro-san-giovanni", marcado: false });
+    expect(await marcados()).toEqual(["barco-amalfi"]);
+  });
+
   it("deve permitir marcar de novo depois de desmarcar", async () => {
     await marcar("ingressos", true);
     await marcar("ingressos", false);
@@ -151,6 +172,8 @@ describe("PUT /api/checklist/:itemId — item desconhecido → 404", () => {
   it.each([
     ["id que não está na lista", "visto"],
     ["id da lista com maiúsculas", "TRENS"],
+    ["item novo escrito sem hífen", "carrosangiovanni"],
+    ["item novo com o nome inteiro da cidade", "carro-san-giovanni-rotondo"],
     ["id da lista com espaço no fim", "trens%20"],
     ["uuid", "3f2b8c1e-5d4a-4c7b-9e1f-0a1b2c3d4e5f"],
     ["nome de propriedade de objeto", "constructor"],

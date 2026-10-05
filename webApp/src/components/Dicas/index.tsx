@@ -51,8 +51,8 @@ export const Dicas = () => {
           </Dica>
           <Dica titulo="Transporte">
             <p>
-              Trem entre as grandes cidades e em Cinque Terre. Vaporetto em Veneza. Na Costa Amalfitana, combinar ônibus, barco e
-              transfers.
+              Trem entre as grandes cidades e em Cinque Terre. Vaporetto em Veneza. Ônibus ou transfer entre Assis e Cássia. Carro
+              alugado só no trecho Nápoles → San Giovanni Rotondo → Costa Amalfitana.
             </p>
             <p>Não vale alugar carro ou moto para a viagem inteira.</p>
           </Dica>

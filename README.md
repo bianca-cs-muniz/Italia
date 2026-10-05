@@ -3,8 +3,8 @@
 Site pessoal de planejamento de uma viagem pela Itália:
 
 - **Lugares** — hospedagens, atrações, restaurantes e experiências salvos por trecho da viagem
-  (Roma, Toscana, Cinque Terre, Veneza, Norte, Nápoles e Costa Amalfitana), com resumo, preço,
-  link, descrição, destaques e **fotos**.
+  (Roma, Úmbria, Toscana, Cinque Terre, Veneza, Norte, Nápoles, San Giovanni Rotondo e Costa
+  Amalfitana), com resumo, preço, link, descrição, destaques e **fotos**.
 - **Checklist** — os preparativos da viagem (passaportes, seguro, passagens, trens...), com o que
   já foi marcado.
 
@@ -24,7 +24,8 @@ Italia-plano/
 ```
 
 > `docs/prototipo.html` é a versão de arquivo único que serviu de referência de
-> comportamento e de visual.
+> comportamento e de visual. Ele traz o roteiro antigo, de 22–23 dias; o roteiro atual, de 25
+> dias, está só no `webApp`.
 
 ## Como rodar
 
@@ -85,7 +86,7 @@ A listagem nunca traz os bytes das fotos.
 
 | Campo | Regra |
 |---|---|
-| `trecho` | `roma`, `toscana`, `cinque`, `veneza`, `norte`, `napoles` ou `amalfi` |
+| `trecho` | `roma`, `umbria`, `toscana`, `cinque`, `veneza`, `norte`, `napoles`, `sangiovanni` ou `amalfi` |
 | `tipo` | `Hospedagem`, `Atração`, `Restaurante`, `Experiência` ou `Outro` |
 | `nome` | 1 a 120 caracteres |
 | `resumo` | até 200 caracteres |
@@ -97,8 +98,8 @@ A listagem nunca traz os bytes das fotos.
 
 Itens do checklist (`:itemId`): `passaportes`, `regras-schengen`, `etias`, `seguro-viagem`,
 `passagens`, `hoteis`, `trens`, `ingressos`, `vendemmia`, `transporte-cinque-terre`,
-`barco-amalfi`, `reserva-emergencia`, `esim`, `adaptador`, `bagagem`. A lista fica em
-`webApi/src/modules/checklist/checklist.constantes.ts` e o front usa os mesmos ids.
+`barco-amalfi`, `carro-san-giovanni`, `reserva-emergencia`, `esim`, `adaptador`, `bagagem`. A lista
+fica em `webApi/src/modules/checklist/checklist.constantes.ts` e o front usa os mesmos ids.
 
 ### Como as fotos são salvas
 

@@ -18,13 +18,33 @@ const IDS_CHECKLIST_ESPERADOS = [
   "vendemmia",
   "transporte-cinque-terre",
   "barco-amalfi",
+  "carro-san-giovanni",
   "reserva-emergencia",
   "esim",
   "adaptador",
   "bagagem",
 ];
 
-const IDS_TRECHOS_ESPERADOS = ["roma", "toscana", "cinque", "veneza", "norte", "napoles", "amalfi"];
+const IDS_TRECHOS_ESPERADOS = ["roma", "umbria", "toscana", "cinque", "veneza", "norte", "napoles", "sangiovanni", "amalfi"];
+
+// Paradas do mapa, na ordem da animação.
+const IDS_PARADAS_ESPERADOS = [
+  "roma",
+  "assis",
+  "cassia",
+  "florenca",
+  "pisa",
+  "cinque",
+  "veneza",
+  "verona",
+  "milao",
+  "napoles",
+  "pompeia",
+  "sangiovanni",
+  "amalfi",
+];
+
+const ULTIMO_DIA = 25;
 
 // "Dias 6–9" -> [6, 9]; "dia 15" -> [15, 15].
 const intervaloDeDias = (texto: string): [number, number] => {
@@ -35,8 +55,14 @@ const intervaloDeDias = (texto: string): [number, number] => {
 };
 
 describe("itens do checklist", () => {
-  it("deve ter exatamente os 15 ids combinados com a API, na ordem", () => {
+  it("deve ter exatamente os 16 ids combinados com a API, na ordem", () => {
     expect(ITENS_CHECKLIST.map((item) => item.id)).toEqual(IDS_CHECKLIST_ESPERADOS);
+  });
+
+  it("deve trazer o carro de San Giovanni Rotondo logo depois do barco de Amalfi", () => {
+    const ids = ITENS_CHECKLIST.map((item) => item.id);
+
+    expect(ids[ids.indexOf("barco-amalfi") + 1]).toBe("carro-san-giovanni");
   });
 
   it("deve ter ids únicos", () => {
@@ -51,7 +77,7 @@ describe("itens do checklist", () => {
 });
 
 describe("trechos", () => {
-  it("deve ter os 7 trechos que aceitam lugares, na ordem da viagem", () => {
+  it("deve ter os 9 trechos que aceitam lugares, na ordem da viagem", () => {
     expect([...IDS_TRECHOS]).toEqual(IDS_TRECHOS_ESPERADOS);
   });
 
@@ -67,7 +93,7 @@ describe("trechos", () => {
     expect(ehTrechoId("retorno")).toBe(false);
   });
 
-  it("deve aceitar cada um dos 7 ids como trecho de lugar", () => {
+  it("deve aceitar cada um dos 9 ids como trecho de lugar", () => {
     expect(IDS_TRECHOS_ESPERADOS.filter((id) => !ehTrechoId(id))).toEqual([]);
   });
 
@@ -89,13 +115,46 @@ describe("trechos", () => {
   it("deve devolver undefined ao procurar um trecho que não existe", () => {
     expect(obterTrecho("sicilia")).toBeUndefined();
   });
+
+  it("deve ter ids únicos", () => {
+    const ids = TRECHOS.map((trecho) => trecho.id);
+
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("deve somar 24 noites, uma a menos que os dias da viagem", () => {
+    const noites = TRECHOS.reduce((soma, trecho) => soma + (trecho.noites ?? 0), 0);
+
+    expect(noites).toBe(ULTIMO_DIA - 1);
+  });
+
+  it("deve ter em cada trecho com hospedagem tantas noites quantos dias listados", () => {
+    const divergentes = TRECHOS_COM_BASE.filter((trecho) => trecho.noites !== trecho.itens.length);
+
+    expect(divergentes.map((trecho) => trecho.id)).toEqual([]);
+  });
+
+  it("deve deixar o retorno sem noites", () => {
+    expect(obterTrecho("retorno")?.noites).toBeUndefined();
+  });
+
+  it("deve ter uma única noite em Amalfi, no dia 24", () => {
+    const amalfi = obterTrecho("amalfi");
+
+    expect(amalfi?.noites).toBe(1);
+    expect(amalfi?.itens.map((item) => item.dia)).toEqual([24]);
+  });
+
+  it("deve fazer o retorno no dia 25", () => {
+    expect(obterTrecho("retorno")?.itens.map((item) => item.dia)).toEqual([ULTIMO_DIA]);
+  });
 });
 
 describe("dias do roteiro", () => {
-  it("deve cobrir os dias de 1 a 23, em ordem, sem buracos nem repetição", () => {
+  it("deve cobrir os dias de 1 a 25, em ordem, sem buracos nem repetição", () => {
     const dias = TRECHOS.flatMap((trecho) => trecho.itens.map((item) => item.dia));
 
-    expect(dias).toEqual(Array.from({ length: 23 }, (_, i) => i + 1));
+    expect(dias).toEqual(Array.from({ length: ULTIMO_DIA }, (_, i) => i + 1));
   });
 
   it.each(TRECHOS)("deve ter o rótulo de dias de $id igual aos dias listados nele", (trecho) => {
@@ -124,10 +183,34 @@ describe("paradas do mapa", () => {
     expect(semParada).toEqual([]);
   });
 
-  it("deve ter exatamente uma cidade-base em cada trecho", () => {
-    const bases = IDS_TRECHOS.map((id) => PARADAS.filter((parada) => parada.trecho === id && parada.base).length);
+  it("deve ter exatamente as paradas do roteiro, na ordem da viagem", () => {
+    expect(PARADAS.map((parada) => parada.id)).toEqual(IDS_PARADAS_ESPERADOS);
+  });
 
-    expect(bases).toEqual(IDS_TRECHOS.map(() => 1));
+  it("deve ter ao menos uma cidade-base em cada trecho", () => {
+    const semBase = IDS_TRECHOS.filter((id) => !PARADAS.some((parada) => parada.trecho === id && parada.base));
+
+    expect(semBase).toEqual([]);
+  });
+
+  it("deve ter duas cidades-base na Úmbria (Assis e Cássia)", () => {
+    const bases = PARADAS.filter((parada) => parada.trecho === "umbria" && parada.base);
+
+    expect(bases.map((parada) => parada.id)).toEqual(["assis", "cassia"]);
+  });
+
+  it("deve ter uma única cidade-base em cada trecho fora a Úmbria", () => {
+    const outros = IDS_TRECHOS.filter((id) => id !== "umbria");
+    const bases = outros.map((id) => PARADAS.filter((parada) => parada.trecho === id && parada.base).length);
+
+    expect(bases).toEqual(outros.map(() => 1));
+  });
+
+  it("deve colocar Pisa no trecho de Cinque Terre, como parada de passagem", () => {
+    const pisa = PARADAS.find((parada) => parada.id === "pisa");
+
+    expect(pisa?.trecho).toBe("cinque");
+    expect(pisa?.base).toBeFalsy();
   });
 
   it("deve ter ids únicos", () => {
@@ -136,10 +219,36 @@ describe("paradas do mapa", () => {
     expect(new Set(ids).size).toBe(ids.length);
   });
 
+  // Os bate-voltas são identificados como "de-para": um hífen no id de uma
+  // parada quebraria essa leitura.
+  it("não deve ter hífen no id de nenhuma parada", () => {
+    expect(PARADAS.filter((parada) => parada.id.includes("-")).map((parada) => parada.id)).toEqual([]);
+  });
+
+  it("deve usar o mapa de 440 x 500", () => {
+    expect([LARGURA_MAPA, ALTURA_MAPA]).toEqual([440, 500]);
+  });
+
   it("deve ficar dentro da área do mapa", () => {
     const fora = PARADAS.filter((parada) => parada.x < 0 || parada.x > LARGURA_MAPA || parada.y < 0 || parada.y > ALTURA_MAPA);
 
     expect(fora.map((parada) => parada.id)).toEqual([]);
+  });
+
+  // Confere só o ponto de ancoragem do rótulo (x + rotuloX, y + rotuloY); a
+  // largura do texto depende da fonte e não é medida aqui.
+  it("deve ancorar todo rótulo dentro da área do mapa", () => {
+    const fora = PARADAS.filter((parada) => {
+      const x = parada.x + parada.rotuloX;
+      const y = parada.y + parada.rotuloY;
+      return x < 0 || x > LARGURA_MAPA || y < 0 || y > ALTURA_MAPA;
+    });
+
+    expect(fora.map((parada) => parada.id)).toEqual([]);
+  });
+
+  it("deve ter nome preenchido em toda parada", () => {
+    expect(PARADAS.filter((parada) => !parada.nome.trim()).map((parada) => parada.id)).toEqual([]);
   });
 
   it.each(PARADAS)("deve ter os dias de $id dentro dos dias do trecho", (parada) => {
@@ -153,6 +262,10 @@ describe("paradas do mapa", () => {
 
   it("deve começar a viagem em Roma", () => {
     expect(PARADA_INICIAL.id).toBe("roma");
+  });
+
+  it("deve ter Nápoles → Pompeia como único bate-volta", () => {
+    expect(BATE_VOLTAS.map(({ id }) => id)).toEqual(["napoles-pompeia"]);
   });
 
   it("deve ligar cada bate-volta a duas paradas do mesmo trecho", () => {

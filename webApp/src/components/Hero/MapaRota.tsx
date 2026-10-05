@@ -21,7 +21,7 @@ const LINHAS_HORIZONTAIS = Array.from({ length: 8 }, (_, i) => (i + 1) * PASSO_G
 const LINHAS_VERTICAIS = Array.from({ length: 7 }, (_, i) => (i + 1) * PASSO_GRADE);
 
 // Tempo de uma volta completa do trem, em ms.
-const VOLTA_DO_TREM = 16000;
+const VOLTA_DO_TREM = 19000;
 
 const irParaTrecho = (parada: IParada) => {
   document.getElementById(`ch-${parada.trecho}`)?.scrollIntoView({ behavior: movimentoReduzido() ? "auto" : "smooth" });
@@ -59,11 +59,11 @@ export const MapaRota = () => {
       caminho.style.transition = `stroke-dashoffset ${duracao}s cubic-bezier(.6,.1,.3,1) ${atraso}s`;
       caminho.style.strokeDashoffset = "0";
     };
-    tracar(norte, 2.2, 0.5);
-    tracar(sul, 0.6, 2.9);
+    tracar(norte, 2.8, 0.5);
+    tracar(sul, 0.9, 3.5);
 
     temporizadores.push(window.setTimeout(() => setParadasVisiveis(true), reduzido ? 0 : 500));
-    temporizadores.push(window.setTimeout(() => setDesenhado(true), reduzido ? 0 : 2500));
+    temporizadores.push(window.setTimeout(() => setDesenhado(true), reduzido ? 0 : 3100));
 
     // O trem percorre o caminho inteiro em laço. Sem animação quando a pessoa
     // pediu menos movimento.
@@ -82,7 +82,7 @@ export const MapaRota = () => {
             quadro = requestAnimationFrame(andar);
           };
           quadro = requestAnimationFrame(andar);
-        }, 3400),
+        }, 4400),
       );
     }
 
@@ -126,7 +126,7 @@ export const MapaRota = () => {
             style={{ transitionDelay: `${i * 230}ms` }}
             tabIndex={0}
             role="link"
-            aria-label={`${parada.nome}, ${parada.dias}`}
+            aria-label={`${parada.nomeCompleto ?? parada.nome}, ${parada.dias}`}
             onClick={() => irParaTrecho(parada)}
             onKeyDown={(evento) => {
               if (evento.key === "Enter" || evento.key === " ") {

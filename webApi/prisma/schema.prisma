@@ -17,7 +17,7 @@ datasource db {
 
 model Lugar {
   id           String   @id @default(uuid()) @db.Uuid
-  trecho       String   // roma | toscana | cinque | veneza | norte | napoles | amalfi
+  trecho       String   // roma | umbria | toscana | cinque | veneza | norte | napoles | sangiovanni | amalfi
   tipo         String   // Hospedagem | Atração | Restaurante | Experiência | Outro
   nome         String   // 1 a 120 caracteres
   resumo       String   @default("")

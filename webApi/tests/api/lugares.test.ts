@@ -79,12 +79,13 @@ describe("POST /api/lugares", () => {
     expect(resposta.body).not.toHaveProperty("admin");
   });
 
-  it.each(["roma", "toscana", "cinque", "veneza", "norte", "napoles", "amalfi"])(
+  it.each(["roma", "umbria", "toscana", "cinque", "veneza", "norte", "napoles", "sangiovanni", "amalfi"])(
     "deve aceitar o trecho %s",
     async (trecho) => {
       const resposta = await request(app).post("/api/lugares").send(lugarValido({ trecho }));
 
       expect(resposta.status).toBe(201);
+      expect(resposta.body.trecho).toBe(trecho);
     },
   );
 
@@ -116,6 +117,10 @@ describe("POST /api/lugares", () => {
     it.each([
       ["trecho fora da lista", { trecho: "sicilia" }, "trecho: Trecho inválido."],
       ["trecho com maiúscula", { trecho: "Roma" }, "trecho: Trecho inválido."],
+      ["retorno, que é capítulo do roteiro mas não tem lugares", { trecho: "retorno" }, "trecho: Trecho inválido."],
+      ["trecho novo escrito com hífen", { trecho: "san-giovanni" }, "trecho: Trecho inválido."],
+      ["trecho novo com acento", { trecho: "úmbria" }, "trecho: Trecho inválido."],
+      ["trecho vazio", { trecho: "" }, "trecho: Trecho inválido."],
       ["tipo fora da lista", { tipo: "Museu" }, "tipo: Tipo inválido."],
       ["tipo sem acento", { tipo: "Atracao" }, "tipo: Tipo inválido."],
       ["nome vazio", { nome: "" }, "nome: Informe o nome do lugar."],
@@ -333,6 +338,15 @@ describe("GET /api/lugares", () => {
     expect(resposta.body.map((lugar: any) => lugar.trecho)).toEqual(["roma", "veneza"]);
   });
 
+  it("deve trazer os lugares dos trechos novos (Úmbria e San Giovanni Rotondo)", async () => {
+    await criarLugar(app, { trecho: "umbria" });
+    await criarLugar(app, { trecho: "sangiovanni" });
+
+    const resposta = await request(app).get("/api/lugares");
+
+    expect(resposta.body.map((lugar: any) => lugar.trecho)).toEqual(["umbria", "sangiovanni"]);
+  });
+
   it("deve trazer as fotos só como ids, sem nenhum campo `dados`", async () => {
     const foto = await enviarFoto(app);
     await criarLugar(app, { fotos: [foto] });
@@ -388,6 +402,26 @@ describe("PUT /api/lugares/:id", () => {
 
     expect(resposta.status).toBe(200);
     expect(resposta.body).toMatchObject({ ...novo, id: lugar.id });
+  });
+
+  it("deve permitir mover um lugar para um trecho novo", async () => {
+    const lugar = await criarLugar(app, { trecho: "napoles" });
+
+    const resposta = await request(app).put(`/api/lugares/${lugar.id}`).send(lugarValido({ trecho: "sangiovanni" }));
+
+    expect(resposta.status).toBe(200);
+    expect(resposta.body).toMatchObject({ id: lugar.id, trecho: "sangiovanni" });
+  });
+
+  it("deve recusar mover um lugar para o retorno e manter o trecho anterior", async () => {
+    const lugar = await criarLugar(app, { trecho: "amalfi" });
+
+    const resposta = await request(app).put(`/api/lugares/${lugar.id}`).send(lugarValido({ trecho: "retorno" }));
+    const lista = await request(app).get("/api/lugares");
+
+    expect(resposta.status).toBe(400);
+    expect(resposta.body).toEqual({ error: "trecho: Trecho inválido." });
+    expect(lista.body).toEqual([lugar]);
   });
 
   it("deve manter id e criadoEm e gravar a alteração", async () => {

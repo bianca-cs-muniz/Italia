@@ -6,7 +6,7 @@ export const PRIORIZAR_COM_CRIANCA = [
   "Veneza",
   "Murano e Burano",
   "Passeio de barco",
-  "Lago di Como",
+  "Torre de Pisa",
   "Pompeia em visita curta",
   "Pizza em Nápoles",
   "Toscana para famílias",
@@ -17,11 +17,12 @@ export const EVITAR_COM_CRIANCA = ["Muitos museus no mesmo dia", "Troca diária 
 // Em ordem: o que não pode ficar de fora primeiro.
 export const PRIORIDADES = [
   "Roma e Vaticano",
+  "Assis, Cássia e San Giovanni Rotondo",
   "Florença e Toscana",
   "Veneza",
-  "Costa Amalfitana, Ravello e Positano",
-  "Nápoles e Pompeia",
   "Cinque Terre",
-  "Milão e Lago di Como",
-  "Verona e Pisa como bate-voltas",
+  "Nápoles e Pompeia",
+  "Costa Amalfitana",
+  "Milão",
+  "Verona e Pisa de passagem",
 ];

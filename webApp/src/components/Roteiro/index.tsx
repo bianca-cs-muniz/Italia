@@ -23,8 +23,8 @@ export const Roteiro = ({ lugares, carregandoLugares, aoAbrirLugar, aoAdicionarL
         <div ref={ref} className={classeRevelar(visivel, "sec-head")}>
           <h2>Roteiro dia a dia</h2>
           <p>
-            Roma → Toscana → Cinque Terre → Veneza → norte → Nápoles → Costa Amalfitana. A Sicília fica para uma viagem própria de 10–14
-            dias.
+            Roma → Úmbria → Florença → Cinque Terre → Veneza → Milão → Nápoles → San Giovanni Rotondo → Costa Amalfitana, com quatro
+            paradas de peregrinação: Roma, Assis, Cássia e San Giovanni Rotondo. A Sicília fica para uma viagem própria de 10–14 dias.
           </p>
         </div>
         {TRECHOS.map((trecho) => (

@@ -16,13 +16,14 @@ export const ITENS_CHECKLIST: IItemChecklist[] = [
   { id: "vendemmia", texto: "Reservar experiência na Toscana/vendemmia" },
   { id: "transporte-cinque-terre", texto: "Planejar transporte de Cinque Terre" },
   { id: "barco-amalfi", texto: "Reservar passeio de barco na Costa Amalfitana" },
+  { id: "carro-san-giovanni", texto: "Reservar carro para o trecho de San Giovanni Rotondo e conferir a Permissão Internacional para Dirigir" },
   { id: "reserva-emergencia", texto: "Separar dinheiro/cartão para emergências" },
   { id: "esim", texto: "eSIM/chip internacional" },
   { id: "adaptador", texto: "Adaptador de tomada" },
   { id: "bagagem", texto: "Conferir política de bagagem das companhias aéreas" },
 ];
 
-// Progresso "N de 15". Só contam ids que existem na lista (um id antigo ou
+// Progresso "N de 16". Só contam ids que existem na lista (um id antigo ou
 // repetido vindo do servidor não infla a conta).
 export const calcularProgresso = (marcados: readonly string[], itens: readonly IItemChecklist[] = ITENS_CHECKLIST) => {
   const conjunto = new Set(marcados);
