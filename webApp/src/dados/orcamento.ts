@@ -20,6 +20,26 @@ export const TETO_ORCAMENTO = 20000;
 
 export const META_ORCAMENTO = "R$ 55.000–60.000";
 
+// Recorte dos primeiros 11 dias, também para os três. Não se soma à meta: é
+// uma estimativa à parte, com escala própria.
+export const ESTIMATIVA_TRECHO: { titulo: string; dias: string; faixas: IFaixaOrcamento[] } = {
+  titulo: "Roma, Assis e Florença",
+  dias: "Dias 1–11",
+  faixas: [
+    { rotulo: "Hospedagem", minimo: 5500, maximo: 7500 },
+    { rotulo: "Transporte", minimo: 1000, maximo: 1500 },
+    { rotulo: "Alimentação", minimo: 3500, maximo: 4500 },
+    { rotulo: "Atrações", minimo: 1500, maximo: 2200 },
+  ],
+};
+
+// Barra cheia na escala do trecho.
+export const TETO_ESTIMATIVA_TRECHO = 8000;
+
+// Total de uma lista de faixas: soma dos mínimos e soma dos máximos.
+export const somarFaixas = (faixas: readonly IFaixaOrcamento[]) =>
+  faixas.reduce((total, faixa) => ({ minimo: total.minimo + faixa.minimo, maximo: total.maximo + faixa.maximo }), { minimo: 0, maximo: 0 });
+
 const limitar = (valor: number) => Math.min(100, Math.max(0, valor));
 
 // A barra vai de zero até o máximo da faixa; a parte de zero até o mínimo fica

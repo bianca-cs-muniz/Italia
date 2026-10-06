@@ -17,7 +17,7 @@ export const EVITAR_COM_CRIANCA = ["Muitos museus no mesmo dia", "Troca diária 
 // Em ordem: o que não pode ficar de fora primeiro.
 export const PRIORIDADES = [
   "Roma e Vaticano",
-  "Assis, Cássia e San Giovanni Rotondo",
+  "Assis e San Giovanni Rotondo",
   "Florença e Toscana",
   "Veneza",
   "Cinque Terre",

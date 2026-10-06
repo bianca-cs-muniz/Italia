@@ -32,7 +32,7 @@ export const Hero = () => {
           </h1>
           <p className="title-2">vinte e cinco dias em setembro</p>
           <p className="goal">
-            Os principais lugares do país e quatro paradas de fé num ritmo confortável: história, paisagens, praia, comida boa e
+            Os principais lugares do país e três paradas de fé num ritmo confortável: história, paisagens, praia, comida boa e
             experiências que também façam sentido para uma criança.
           </p>
           <dl className="facts">

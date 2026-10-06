@@ -3,7 +3,7 @@
 Site pessoal de planejamento de uma viagem pela Itália:
 
 - **Lugares** — hospedagens, atrações, restaurantes e experiências salvos por trecho da viagem
-  (Roma, Úmbria, Toscana, Cinque Terre, Veneza, Norte, Nápoles, San Giovanni Rotondo e Costa
+  (Roma, Assis, Toscana, Cinque Terre, Veneza, Norte, Nápoles, San Giovanni Rotondo e Costa
   Amalfitana), com resumo, preço, link, descrição, destaques e **fotos**.
 - **Checklist** — os preparativos da viagem (passaportes, seguro, passagens, trens...), com o que
   já foi marcado.

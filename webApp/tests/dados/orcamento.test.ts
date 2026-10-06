@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calcularBarra, ORCAMENTO, TETO_ORCAMENTO } from "@/dados/orcamento";
+import { calcularBarra, ESTIMATIVA_TRECHO, ORCAMENTO, somarFaixas, TETO_ESTIMATIVA_TRECHO, TETO_ORCAMENTO } from "@/dados/orcamento";
 
 describe("calcularBarra", () => {
   it("deve calcular a largura como percentual do teto", () => {
@@ -77,5 +77,78 @@ describe("faixas do orçamento", () => {
     expect(barra.largura).toBeLessThanOrEqual(100);
     expect(barra.inicioFaixa).toBeGreaterThan(0);
     expect(barra.inicioFaixa).toBeLessThanOrEqual(100);
+  });
+});
+
+describe("estimativa do trecho Roma, Assis e Florença", () => {
+  it("deve identificar o recorte como Roma, Assis e Florença, dias 1–11", () => {
+    expect(ESTIMATIVA_TRECHO).toMatchObject({ titulo: "Roma, Assis e Florença", dias: "Dias 1–11" });
+  });
+
+  it("deve ter as 4 faixas combinadas, com seus valores", () => {
+    expect(ESTIMATIVA_TRECHO.faixas).toEqual([
+      { rotulo: "Hospedagem", minimo: 5500, maximo: 7500 },
+      { rotulo: "Transporte", minimo: 1000, maximo: 1500 },
+      { rotulo: "Alimentação", minimo: 3500, maximo: 4500 },
+      { rotulo: "Atrações", minimo: 1500, maximo: 2200 },
+    ]);
+  });
+
+  it("deve ter rótulos únicos e preenchidos", () => {
+    const rotulos = ESTIMATIVA_TRECHO.faixas.map((faixa) => faixa.rotulo.trim());
+
+    expect(rotulos.every(Boolean)).toBe(true);
+    expect(new Set(rotulos).size).toBe(rotulos.length);
+  });
+
+  it.each(ESTIMATIVA_TRECHO.faixas)("deve ter mínimo positivo e não maior que o máximo em $rotulo", ({ minimo, maximo }) => {
+    expect(minimo).toBeGreaterThan(0);
+    expect(minimo).toBeLessThanOrEqual(maximo);
+  });
+
+  it.each(ESTIMATIVA_TRECHO.faixas)("deve caber no trilho do trecho sem estourar o teto em $rotulo", ({ minimo, maximo }) => {
+    expect(maximo).toBeLessThanOrEqual(TETO_ESTIMATIVA_TRECHO);
+
+    const barra = calcularBarra(minimo, maximo, TETO_ESTIMATIVA_TRECHO);
+
+    expect(barra.largura).toBeGreaterThan(0);
+    expect(barra.largura).toBeLessThanOrEqual(100);
+    expect(barra.inicioFaixa).toBeGreaterThan(0);
+    expect(barra.inicioFaixa).toBeLessThanOrEqual(100);
+  });
+
+  it("deve usar 8.000 como barra cheia do trecho", () => {
+    expect(TETO_ESTIMATIVA_TRECHO).toBe(8000);
+  });
+
+  it("deve somar de 11.500 a 15.700 no total do trecho", () => {
+    expect(somarFaixas(ESTIMATIVA_TRECHO.faixas)).toEqual({ minimo: 11500, maximo: 15700 });
+  });
+});
+
+describe("somarFaixas", () => {
+  it("deve devolver zeros quando a lista está vazia", () => {
+    expect(somarFaixas([])).toEqual({ minimo: 0, maximo: 0 });
+  });
+
+  it("deve devolver a própria faixa quando a lista tem uma só", () => {
+    expect(somarFaixas([{ rotulo: "Única", minimo: 300, maximo: 450 }])).toEqual({ minimo: 300, maximo: 450 });
+  });
+
+  it("deve somar mínimos e máximos separadamente", () => {
+    const faixas = [
+      { rotulo: "A", minimo: 100, maximo: 250 },
+      { rotulo: "B", minimo: 40, maximo: 60 },
+    ];
+
+    expect(somarFaixas(faixas)).toEqual({ minimo: 140, maximo: 310 });
+  });
+
+  it("não deve alterar a lista recebida", () => {
+    const faixas = [{ rotulo: "A", minimo: 100, maximo: 250 }];
+
+    somarFaixas(faixas);
+
+    expect(faixas).toEqual([{ rotulo: "A", minimo: 100, maximo: 250 }]);
   });
 });

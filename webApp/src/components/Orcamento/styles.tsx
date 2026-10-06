@@ -85,3 +85,43 @@ export const Total = styled("div")`
     max-width: 70ch;
   }
 `;
+
+/* Estimativa de um trecho do roteiro: bloco à parte, sem o cartão de total. */
+export const Trecho = styled("div")`
+  margin-top: 44px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+
+  h3 {
+    font-family: var(--serif);
+    font-weight: 500;
+    font-size: 1.4rem;
+    line-height: 1.2;
+    margin: 0;
+  }
+
+  .apoio {
+    color: var(--muted);
+    margin: 6px 0 22px;
+    max-width: 70ch;
+  }
+
+  .total-trecho {
+    margin: 18px 0 0;
+    text-align: right;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .total-trecho b {
+    font-weight: 600;
+    margin-left: 8px;
+  }
+
+  .nota {
+    color: var(--muted);
+    font-size: .9rem;
+    margin: 10px 0 0;
+    max-width: 70ch;
+  }
+`;

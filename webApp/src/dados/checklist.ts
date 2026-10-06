@@ -12,7 +12,7 @@ export const ITENS_CHECKLIST: IItemChecklist[] = [
   { id: "passagens", texto: "Passagens internacionais — preferir multi-city/open jaw" },
   { id: "hoteis", texto: "Reservar hotéis com quarto triplo e boa localização" },
   { id: "trens", texto: "Comprar trens com antecedência quando abrir a venda" },
-  { id: "ingressos", texto: "Reservar Vaticano, Coliseu, Pompeia e atrações concorridas" },
+  { id: "ingressos", texto: "Reservar Vaticano, Coliseu, Cúpula do Duomo, Uffizi, Galeria da Academia, Pompeia e atrações concorridas" },
   { id: "vendemmia", texto: "Reservar experiência na Toscana/vendemmia" },
   { id: "transporte-cinque-terre", texto: "Planejar transporte de Cinque Terre" },
   { id: "barco-amalfi", texto: "Reservar passeio de barco na Costa Amalfitana" },

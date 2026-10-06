@@ -16,8 +16,7 @@ export interface IParada {
   rotuloX: number;
   rotuloY: number;
   ancora?: "start" | "middle" | "end";
-  // Cidade onde se dorme (ponto maior, com anel amarelo). Um trecho pode ter
-  // mais de uma, como a Úmbria.
+  // Cidade onde se dorme (ponto maior, com anel amarelo).
   base?: boolean;
 }
 
@@ -27,10 +26,8 @@ export const PASSO_GRADE = 55;
 
 export const PARADAS: IParada[] = [
   { id: "roma", nome: "Roma", x: 234, y: 343, trecho: "roma", dias: "dias 1–5", rotuloX: 14, rotuloY: 5, base: true },
-  // A Úmbria tem duas cidades onde se dorme: Assis (2 noites) e Cássia (1).
   { id: "assis", nome: "Assis", x: 236, y: 252, trecho: "umbria", dias: "dias 6–7", rotuloX: -14, rotuloY: 2, ancora: "end", base: true },
-  { id: "cassia", nome: "Cássia", x: 274, y: 288, trecho: "umbria", dias: "dia 8", rotuloX: 14, rotuloY: 4, base: true },
-  { id: "florenca", nome: "Florença", x: 166, y: 205, trecho: "toscana", dias: "dias 9–11", rotuloX: 14, rotuloY: 14, base: true },
+  { id: "florenca", nome: "Florença", x: 166, y: 205, trecho: "toscana", dias: "dias 8–11", rotuloX: 14, rotuloY: 14, base: true },
   { id: "pisa", nome: "Pisa", x: 118, y: 222, trecho: "cinque", dias: "dia 12", rotuloX: -12, rotuloY: 16, ancora: "end" },
   { id: "cinque", nome: "Cinque Terre", x: 80, y: 180, trecho: "cinque", dias: "dias 12–14", rotuloX: 0, rotuloY: -26, ancora: "middle", base: true },
   { id: "veneza", nome: "Veneza", x: 228, y: 84, trecho: "veneza", dias: "dias 15–17", rotuloX: 14, rotuloY: 5, base: true },
@@ -66,9 +63,10 @@ const ponto = (id: string) => {
   return `${p.x},${p.y}`;
 };
 
-// Entre bases, de Roma a Milão: sobe pela Úmbria (Assis e Cássia), passa por
-// Florença, Pisa, Cinque Terre e Veneza, e chega a Milão por Verona.
-export const CAMINHO_NORTE = `M${ponto("roma")} Q 250,300 ${ponto("assis")} Q 266,258 ${ponto("cassia")} Q 250,150 ${ponto("florenca")} Q 140,220 ${ponto("pisa")} Q 92,208 ${ponto("cinque")} Q 236,190 ${ponto("veneza")} Q 190,98 ${ponto("verona")} Q 104,96 ${ponto("milao")}`;
+// Entre bases, de Roma a Milão: sobe por Assis, passa por Florença, Pisa,
+// Cinque Terre e Veneza, e chega a Milão por Verona. A curva de Assis a
+// Florença contorna o rótulo de Florença por cima.
+export const CAMINHO_NORTE = `M${ponto("roma")} Q 226,300 ${ponto("assis")} Q 260,130 ${ponto("florenca")} Q 140,220 ${ponto("pisa")} Q 92,208 ${ponto("cinque")} Q 236,190 ${ponto("veneza")} Q 190,98 ${ponto("verona")} Q 104,96 ${ponto("milao")}`;
 
 // Trecho longo, de Milão a Nápoles (pontilhado), descendo pelo lado oeste do mapa.
 const CURVA_LONGA = `C -40,230 140,450 ${ponto("napoles")}`;

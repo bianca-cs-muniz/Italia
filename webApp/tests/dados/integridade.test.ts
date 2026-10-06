@@ -2,7 +2,8 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { describe, expect, it } from "vitest";
 import { ITENS_CHECKLIST } from "@/dados/checklist";
-import { ALTURA_MAPA, BATE_VOLTAS, LARGURA_MAPA, PARADA_INICIAL, PARADAS } from "@/dados/paradas";
+import * as DICAS from "@/dados/dicas";
+import { ALTURA_MAPA, BATE_VOLTAS, CAMINHO_NORTE, LARGURA_MAPA, PARADA_INICIAL, PARADAS } from "@/dados/paradas";
 import { ehTrechoId, IDS_TRECHOS, obterTrecho, TRECHOS, TRECHOS_COM_BASE, TRECHOS_COM_LUGARES } from "@/dados/trechos";
 import { TIPOS_LUGAR } from "@/services/lugares/lugares.service";
 
@@ -31,7 +32,6 @@ const IDS_TRECHOS_ESPERADOS = ["roma", "umbria", "toscana", "cinque", "veneza", 
 const IDS_PARADAS_ESPERADOS = [
   "roma",
   "assis",
-  "cassia",
   "florenca",
   "pisa",
   "cinque",
@@ -53,6 +53,18 @@ const intervaloDeDias = (texto: string): [number, number] => {
   const inicio = Number(partes[1]);
   return [inicio, partes[2] ? Number(partes[2]) : inicio];
 };
+
+// Pontos "x,y" de um caminho SVG, na ordem em que aparecem (âncoras e controles).
+const pontosDoCaminho = (caminho: string): string[] => caminho.match(/-?\d+(?:\.\d+)?,-?\d+(?:\.\d+)?/g) ?? [];
+
+const coordenadasDe = (id: string): string => {
+  const parada = PARADAS.find((p) => p.id === id);
+  if (!parada) throw new Error(`Parada ausente do mapa: ${id}`);
+  return `${parada.x},${parada.y}`;
+};
+
+// Cássia saiu do roteiro: nenhum texto pode continuar citando a cidade.
+const CITA_CASSIA = /c[áa]ssia/i;
 
 describe("itens do checklist", () => {
   it("deve ter exatamente os 16 ids combinados com a API, na ordem", () => {
@@ -148,6 +160,30 @@ describe("trechos", () => {
   it("deve fazer o retorno no dia 25", () => {
     expect(obterTrecho("retorno")?.itens.map((item) => item.dia)).toEqual([ULTIMO_DIA]);
   });
+
+  it("deve ter Assis como base da Úmbria, com 2 noites nos dias 6–7", () => {
+    const umbria = obterTrecho("umbria");
+
+    expect(umbria).toMatchObject({ titulo: "Assis", dias: "Dias 6–7", base: "Assis", noites: 2 });
+    expect(umbria?.itens.map((item) => item.dia)).toEqual([6, 7]);
+  });
+
+  it("deve ter 4 noites na Toscana, nos dias 8–11", () => {
+    const toscana = obterTrecho("toscana");
+
+    expect(toscana).toMatchObject({ dias: "Dias 8–11", noites: 4 });
+    expect(toscana?.itens.map((item) => item.dia)).toEqual([8, 9, 10, 11]);
+  });
+
+  it("deve somar 11 noites entre Roma, Assis e Florença", () => {
+    const noites = ["roma", "umbria", "toscana"].map((id) => obterTrecho(id)?.noites);
+
+    expect(noites.reduce<number>((soma, valor) => soma + (valor ?? 0), 0)).toBe(11);
+  });
+
+  it("não deve citar Cássia em nenhum texto dos trechos", () => {
+    expect(JSON.stringify(TRECHOS)).not.toMatch(CITA_CASSIA);
+  });
 });
 
 describe("dias do roteiro", () => {
@@ -168,6 +204,24 @@ describe("dias do roteiro", () => {
 
     expect(vazios.map((item) => item.dia)).toEqual([]);
   });
+
+  it("deve continuar começando o dia 12 por Florença → Pisa", () => {
+    const dia12 = TRECHOS.flatMap((trecho) => trecho.itens).find((item) => item.dia === 12);
+
+    expect(dia12?.paradas[0]).toBe("Florença → Pisa");
+  });
+
+  it("não deve repetir chip dentro do mesmo dia", () => {
+    const repetidos = TRECHOS.flatMap((trecho) => trecho.itens).filter((item) => new Set(item.paradas.map((chip) => chip.trim().toLowerCase())).size !== item.paradas.length);
+
+    expect(repetidos.map((item) => item.dia)).toEqual([]);
+  });
+});
+
+describe("dicas", () => {
+  it("não deve citar Cássia em nenhuma dica", () => {
+    expect(JSON.stringify(DICAS)).not.toMatch(CITA_CASSIA);
+  });
 });
 
 describe("paradas do mapa", () => {
@@ -187,23 +241,36 @@ describe("paradas do mapa", () => {
     expect(PARADAS.map((parada) => parada.id)).toEqual(IDS_PARADAS_ESPERADOS);
   });
 
-  it("deve ter ao menos uma cidade-base em cada trecho", () => {
-    const semBase = IDS_TRECHOS.filter((id) => !PARADAS.some((parada) => parada.trecho === id && parada.base));
+  it("deve ter uma única cidade-base em cada um dos 9 trechos", () => {
+    const bases = IDS_TRECHOS_ESPERADOS.map((id) => PARADAS.filter((parada) => parada.trecho === id && parada.base).length);
 
-    expect(semBase).toEqual([]);
+    expect(bases).toEqual(IDS_TRECHOS_ESPERADOS.map(() => 1));
   });
 
-  it("deve ter duas cidades-base na Úmbria (Assis e Cássia)", () => {
+  it("deve ter Assis como a cidade-base da Úmbria", () => {
     const bases = PARADAS.filter((parada) => parada.trecho === "umbria" && parada.base);
 
-    expect(bases.map((parada) => parada.id)).toEqual(["assis", "cassia"]);
+    expect(bases.map((parada) => parada.id)).toEqual(["assis"]);
   });
 
-  it("deve ter uma única cidade-base em cada trecho fora a Úmbria", () => {
-    const outros = IDS_TRECHOS.filter((id) => id !== "umbria");
-    const bases = outros.map((id) => PARADAS.filter((parada) => parada.trecho === id && parada.base).length);
+  it("deve mostrar Florença nos dias 8–11", () => {
+    expect(PARADAS.find((parada) => parada.id === "florenca")?.dias).toBe("dias 8–11");
+  });
 
-    expect(bases).toEqual(outros.map(() => 1));
+  it("não deve citar Cássia em nenhuma parada", () => {
+    expect(JSON.stringify(PARADAS)).not.toMatch(CITA_CASSIA);
+  });
+
+  it("deve começar o caminho do norte nas coordenadas de Roma", () => {
+    expect(CAMINHO_NORTE.startsWith(`M${coordenadasDe("roma")} `)).toBe(true);
+  });
+
+  it("deve passar o caminho do norte por Roma, Assis e Florença, nessa ordem", () => {
+    const pontos = pontosDoCaminho(CAMINHO_NORTE);
+    const posicoes = ["roma", "assis", "florenca"].map((id) => pontos.indexOf(coordenadasDe(id)));
+
+    expect(posicoes.every((posicao) => posicao >= 0)).toBe(true);
+    expect(posicoes).toEqual([...posicoes].sort((a, b) => a - b));
   });
 
   it("deve colocar Pisa no trecho de Cinque Terre, como parada de passagem", () => {
