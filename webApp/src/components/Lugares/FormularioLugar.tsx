@@ -17,7 +17,7 @@ const TIPO_PADRAO: TipoLugar = "Atração";
 interface IFormularioLugarProps {
   // Ausente = lugar novo.
   lugar?: ILugar;
-  // Trecho que vem selecionado num lugar novo.
+  // Trecho que vem selecionado num lugar novo (ou num lugar cujo trecho não existe mais).
   trechoInicial: TrechoId;
   // Botão "Adicionar lugar" que abriu o formulário.
   origem?: HTMLElement | null;
@@ -40,8 +40,12 @@ export const FormularioLugar = ({ lugar, trechoInicial, origem, toast, mostrarTo
   const controle = useRef<IControleSobreposicao>(null);
   const campoNome = useRef<HTMLInputElement>(null);
   const idTitulo = useId();
+  const idAvisoTrecho = useId();
+  const trechoRemovido = lugar !== undefined && !ehTrechoId(lugar.trecho);
 
-  const [trecho, setTrecho] = useState<TrechoId>(lugar?.trecho ?? trechoInicial);
+  // Um lugar antigo pode estar num trecho que saiu do roteiro: nesse caso o
+  // formulário abre no trecho inicial, e é ele que vai para a API.
+  const [trecho, setTrecho] = useState<TrechoId>(lugar && ehTrechoId(lugar.trecho) ? lugar.trecho : trechoInicial);
   const [tipo, setTipo] = useState<TipoLugar>(lugar?.tipo ?? TIPO_PADRAO);
   const [nome, setNome] = useState(lugar?.nome ?? "");
   const [resumo, setResumo] = useState(lugar?.resumo ?? "");
@@ -171,21 +175,30 @@ export const FormularioLugar = ({ lugar, trechoInicial, origem, toast, mostrarTo
       >
         <h2 id={idTitulo}>{lugar ? "Editar lugar" : "Novo lugar"}</h2>
         <div className="row2">
-          <label className="f">
-            Trecho da viagem
-            <select
-              value={trecho}
-              onChange={(e) => {
-                if (ehTrechoId(e.target.value)) setTrecho(e.target.value);
-              }}
-            >
-              {TRECHOS_COM_LUGARES.map((t) => (
-                <option key={t.id} value={t.id}>
-                  {t.titulo} — {t.subtitulo}
-                </option>
-              ))}
-            </select>
-          </label>
+          <div>
+            <label className="f">
+              Trecho da viagem
+              <select
+                value={trecho}
+                aria-describedby={trechoRemovido ? idAvisoTrecho : undefined}
+                onChange={(e) => {
+                  if (ehTrechoId(e.target.value)) setTrecho(e.target.value);
+                }}
+              >
+                {TRECHOS_COM_LUGARES.map((t) => (
+                  <option key={t.id} value={t.id}>
+                    {t.titulo} — {t.subtitulo}
+                  </option>
+                ))}
+              </select>
+            </label>
+            {/* Fora do label, para não entrar no nome do campo. */}
+            {trechoRemovido && (
+              <p id={idAvisoTrecho} className="aviso">
+                Este lugar estava num trecho que saiu do roteiro. Escolha o novo trecho.
+              </p>
+            )}
+          </div>
           <label className="f">
             Tipo
             <select value={tipo} onChange={(e) => setTipo(e.target.value as TipoLugar)}>

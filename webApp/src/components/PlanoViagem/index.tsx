@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { TrechoId } from "@/dados/trechos";
+import { ehTrechoId, IDS_TRECHOS, TrechoId } from "@/dados/trechos";
 import { useChecklist, useLugares } from "@/hooks/useDadosViagem";
 import { ILugar, ILugarInput } from "@/services/lugares/lugares.service";
 import { movimentoReduzido } from "@/shared/components/useMovimentoReduzido";
@@ -84,7 +84,8 @@ export const PlanoViagem = () => {
           lugar={lugarVisto}
           origem={visualizador.origem}
           toast={toast}
-          aoEditar={(lugar) => setEditor({ lugar, trecho: lugar.trecho, origem: null })}
+          // Lugar de um trecho que saiu do roteiro: o formulário abre no primeiro trecho válido.
+          aoEditar={(lugar) => setEditor({ lugar, trecho: ehTrechoId(lugar.trecho) ? lugar.trecho : IDS_TRECHOS[0], origem: null })}
           aoFechar={() => setVisualizador(null)}
         />
       )}

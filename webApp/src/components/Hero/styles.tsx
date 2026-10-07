@@ -147,16 +147,6 @@ export const Cabecalho = styled("header")`
     stroke-dashoffset: 3000;
   }
 
-  .route .long {
-    fill: none;
-    stroke: var(--limone);
-    stroke-width: 2;
-    stroke-dasharray: 2 7;
-    stroke-linecap: round;
-    opacity: 0;
-    transition: opacity 1s;
-  }
-
   .route .spur {
     fill: none;
     stroke: #fff;
@@ -166,7 +156,6 @@ export const Cabecalho = styled("header")`
     transition: opacity .8s;
   }
 
-  .route.drawn .long,
   .route.drawn .spur {
     opacity: .7;
   }
@@ -250,10 +239,6 @@ export const Cabecalho = styled("header")`
     width: 22px;
     height: 0;
     border-top: 3px solid var(--limone);
-  }
-
-  .legend i.dash {
-    border-top: 2px dotted var(--limone);
   }
 
   .legend i.spurl {

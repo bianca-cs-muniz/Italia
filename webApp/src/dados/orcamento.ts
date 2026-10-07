@@ -20,11 +20,10 @@ export const TETO_ORCAMENTO = 20000;
 
 export const META_ORCAMENTO = "R$ 55.000–60.000";
 
-// Recorte dos primeiros 11 dias, também para os três. Não se soma à meta: é
-// uma estimativa à parte, com escala própria.
-export const ESTIMATIVA_TRECHO: { titulo: string; dias: string; faixas: IFaixaOrcamento[] } = {
+// Recorte de três cidades, também para os três. Não se soma à meta: é uma
+// estimativa à parte, com escala própria, calculada para o roteiro anterior.
+export const ESTIMATIVA_TRECHO: { titulo: string; faixas: IFaixaOrcamento[] } = {
   titulo: "Roma, Assis e Florença",
-  dias: "Dias 1–11",
   faixas: [
     { rotulo: "Hospedagem", minimo: 5500, maximo: 7500 },
     { rotulo: "Transporte", minimo: 1000, maximo: 1500 },

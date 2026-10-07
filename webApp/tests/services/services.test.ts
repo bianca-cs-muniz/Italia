@@ -32,9 +32,9 @@ const ENTRADA_COMPLETA: ILugarInput = {
 
 // Só o nome preenchido: o resto vai com "" e [].
 const ENTRADA_MINIMA: ILugarInput = {
-  trecho: "veneza",
+  trecho: "norte",
   tipo: "Atração",
-  nome: "Rialto",
+  nome: "Duomo",
   resumo: "",
   preco: "",
   link: "",

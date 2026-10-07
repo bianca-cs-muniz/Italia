@@ -1,3 +1,4 @@
+import { ehTrechoId } from "@/dados/trechos";
 import type { ILugar } from "@/services/lugares/lugares.service";
 
 // Regras puras da tela de lugares, separadas dos componentes para poderem ser
@@ -10,7 +11,12 @@ export const TAMANHO_MAXIMO_DESTAQUE = 80;
 export const lugaresDoTrecho = (lugares: readonly ILugar[], trecho: string): ILugar[] =>
   lugares.filter((lugar) => lugar.trecho === trecho).sort((a, b) => a.criadoEm.localeCompare(b.criadoEm));
 
-// Quantidade de lugares por trecho: { roma: 2, veneza: 1 }.
+// Lugares salvos num trecho que não existe mais no roteiro, do mais antigo para
+// o mais novo. Continuam na tela para poderem ser movidos ou apagados.
+export const lugaresForaDoRoteiro = (lugares: readonly ILugar[]): ILugar[] =>
+  lugares.filter((lugar) => !ehTrechoId(lugar.trecho)).sort((a, b) => a.criadoEm.localeCompare(b.criadoEm));
+
+// Quantidade de lugares por trecho: { roma: 2, norte: 1 }.
 export const contarPorTrecho = (lugares: readonly ILugar[]): Record<string, number> => {
   const contagem: Record<string, number> = {};
   lugares.forEach((lugar) => {

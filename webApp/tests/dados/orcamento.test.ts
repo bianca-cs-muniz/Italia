@@ -81,8 +81,13 @@ describe("faixas do orçamento", () => {
 });
 
 describe("estimativa do trecho Roma, Assis e Florença", () => {
-  it("deve identificar o recorte como Roma, Assis e Florença, dias 1–11", () => {
-    expect(ESTIMATIVA_TRECHO).toMatchObject({ titulo: "Roma, Assis e Florença", dias: "Dias 1–11" });
+  it("deve identificar o recorte só pelo título, Roma, Assis e Florença", () => {
+    expect(ESTIMATIVA_TRECHO.titulo).toBe("Roma, Assis e Florença");
+  });
+
+  // O recorte foi calculado para o roteiro anterior: os dias mudaram e o campo saiu.
+  it("não deve mais informar os dias do recorte", () => {
+    expect(ESTIMATIVA_TRECHO).not.toHaveProperty("dias");
   });
 
   it("deve ter as 4 faixas combinadas, com seus valores", () => {

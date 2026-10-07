@@ -420,6 +420,13 @@ export const Formulario = styled("form")`
     width: 100%;
   }
 
+  /* Aviso curto logo abaixo de um campo. */
+  .aviso {
+    margin: 6px 0 0;
+    font-size: .85rem;
+    color: var(--muted);
+  }
+
   .f textarea {
     resize: vertical;
     min-height: 90px;

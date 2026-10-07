@@ -4,6 +4,7 @@ import React from "react";
 import { TRECHOS, TrechoId } from "@/dados/trechos";
 import { ILugar } from "@/services/lugares/lugares.service";
 import { classeRevelar, useRevelar } from "@/shared/components/useRevelar";
+import { GradeForaDoRoteiro } from "@/components/Lugares/GradeForaDoRoteiro";
 import { Capitulo } from "./Capitulo";
 import { SecaoRoteiro } from "./styles";
 
@@ -23,8 +24,9 @@ export const Roteiro = ({ lugares, carregandoLugares, aoAbrirLugar, aoAdicionarL
         <div ref={ref} className={classeRevelar(visivel, "sec-head")}>
           <h2>Roteiro dia a dia</h2>
           <p>
-            Roma → Assis → Florença → Cinque Terre → Veneza → Milão → Nápoles → San Giovanni Rotondo → Costa Amalfitana, com três
-            paradas de peregrinação: Roma, Assis e San Giovanni Rotondo. A Sicília fica para uma viagem própria de 10–14 dias.
+            Roma → Nápoles → Costa Amalfitana → San Giovanni Rotondo → Assis → Florença → Cinque Terre → Milão, com três paradas de
+            peregrinação: Roma, San Giovanni Rotondo e Assis. Chegada por Roma e volta por Milão. A Sicília fica para uma viagem
+            própria de 10–14 dias.
           </p>
         </div>
         {TRECHOS.map((trecho) => (
@@ -37,6 +39,7 @@ export const Roteiro = ({ lugares, carregandoLugares, aoAbrirLugar, aoAdicionarL
             aoAdicionarLugar={aoAdicionarLugar}
           />
         ))}
+        <GradeForaDoRoteiro lugares={lugares} carregando={carregandoLugares} aoAbrir={aoAbrirLugar} />
       </div>
     </SecaoRoteiro>
   );

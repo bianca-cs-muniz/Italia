@@ -5,6 +5,7 @@ import {
   destaquesParaTexto,
   inicialDoNome,
   lugaresDoTrecho,
+  lugaresForaDoRoteiro,
   MAXIMO_DESTAQUES,
   MAXIMO_FOTOS,
   paragrafos,
@@ -14,6 +15,7 @@ import {
   textoParaDestaques,
   validarDestaques,
 } from "@/components/Lugares/regras";
+import { IDS_TRECHOS } from "@/dados/trechos";
 import type { ILugar } from "@/services/lugares/lugares.service";
 
 const lugar = (dados: Partial<ILugar>): ILugar => ({
@@ -46,9 +48,15 @@ describe("limites espelhados da API", () => {
 
 describe("lugaresDoTrecho", () => {
   it("deve devolver só os lugares do trecho pedido", () => {
-    const lugares = [lugar({ id: "a", trecho: "roma" }), lugar({ id: "b", trecho: "veneza" }), lugar({ id: "c", trecho: "roma" })];
+    const lugares = [lugar({ id: "a", trecho: "roma" }), lugar({ id: "b", trecho: "norte" }), lugar({ id: "c", trecho: "roma" })];
 
     expect(lugaresDoTrecho(lugares, "roma").map((l) => l.id)).toEqual(["a", "c"]);
+  });
+
+  it("não deve trazer para um trecho válido os lugares de um trecho que saiu do roteiro", () => {
+    const lugares = [lugar({ id: "a", trecho: "roma" }), lugar({ id: "antigo", trecho: "veneza" })];
+
+    expect(lugaresDoTrecho(lugares, "roma").map((l) => l.id)).toEqual(["a"]);
   });
 
   it("deve ordenar do mais antigo para o mais novo", () => {
@@ -84,11 +92,55 @@ describe("lugaresDoTrecho", () => {
   });
 });
 
+describe("lugaresForaDoRoteiro", () => {
+  it("deve devolver vazio quando não há lugares", () => {
+    expect(lugaresForaDoRoteiro([])).toEqual([]);
+  });
+
+  it("deve devolver vazio quando todos os lugares estão em trechos do roteiro", () => {
+    const lugares = IDS_TRECHOS.map((trecho) => lugar({ id: trecho, trecho }));
+
+    expect(lugaresForaDoRoteiro(lugares)).toEqual([]);
+  });
+
+  it("deve devolver só os lugares de trechos que saíram do roteiro, do mais antigo para o mais novo", () => {
+    const lugares = [
+      lugar({ id: "novo", trecho: "veneza", criadoEm: "2026-03-01T00:00:00.000Z" }),
+      lugar({ id: "valido", trecho: "roma", criadoEm: "2026-01-15T00:00:00.000Z" }),
+      lugar({ id: "antigo", trecho: "veneza", criadoEm: "2026-01-01T00:00:00.000Z" }),
+      lugar({ id: "meio", trecho: "veneza", criadoEm: "2026-02-01T00:00:00.000Z" }),
+    ];
+
+    expect(lugaresForaDoRoteiro(lugares).map((l) => l.id)).toEqual(["antigo", "meio", "novo"]);
+  });
+
+  it("deve manter a ordem de chegada quando as datas são iguais", () => {
+    const lugares = [lugar({ id: "primeiro", trecho: "veneza" }), lugar({ id: "segundo", trecho: "veneza" })];
+
+    expect(lugaresForaDoRoteiro(lugares).map((l) => l.id)).toEqual(["primeiro", "segundo"]);
+  });
+
+  it.each(["sicilia", "retorno", "Roma", "", "san-giovanni"])('deve tratar como fora do roteiro o trecho desconhecido "%s"', (trecho) => {
+    expect(lugaresForaDoRoteiro([lugar({ id: "x", trecho })]).map((l) => l.id)).toEqual(["x"]);
+  });
+
+  it("não deve alterar a lista recebida", () => {
+    const lugares = [
+      lugar({ id: "novo", trecho: "veneza", criadoEm: "2026-03-01T00:00:00.000Z" }),
+      lugar({ id: "antigo", trecho: "veneza", criadoEm: "2026-01-01T00:00:00.000Z" }),
+    ];
+
+    lugaresForaDoRoteiro(lugares);
+
+    expect(lugares.map((l) => l.id)).toEqual(["novo", "antigo"]);
+  });
+});
+
 describe("contarPorTrecho", () => {
   it("deve contar os lugares de cada trecho", () => {
-    const lugares = [lugar({ trecho: "roma" }), lugar({ trecho: "veneza" }), lugar({ trecho: "roma" })];
+    const lugares = [lugar({ trecho: "roma" }), lugar({ trecho: "toscana" }), lugar({ trecho: "roma" })];
 
-    expect(contarPorTrecho(lugares)).toEqual({ roma: 2, veneza: 1 });
+    expect(contarPorTrecho(lugares)).toEqual({ roma: 2, toscana: 1 });
   });
 
   it("deve devolver um objeto vazio quando não há lugares", () => {

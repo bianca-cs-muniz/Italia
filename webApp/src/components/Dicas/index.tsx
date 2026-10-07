@@ -51,10 +51,14 @@ export const Dicas = () => {
           </Dica>
           <Dica titulo="Transporte">
             <p>
-              Trem entre as grandes cidades e em Cinque Terre. Vaporetto em Veneza. Carro alugado só no trecho Nápoles → San Giovanni
-              Rotondo → Costa Amalfitana.
+              Trem entre as grandes cidades e em Cinque Terre. Barco de Nápoles a Amalfi e de Amalfi a Salerno. Carro alugado só de
+              Salerno a Assis, passando por San Giovanni Rotondo: retirar em Salerno no dia 10 e devolver perto de Assis (Perugia ou
+              Foligno) no dia 14.
             </p>
-            <p>Não vale alugar carro ou moto para a viagem inteira.</p>
+            <p>
+              Conte com pedágios; o centro de Assis é ZTL, estacione fora das muralhas. Voo multi-city: chegada por Roma, volta por
+              Milão (Malpensa). Não vale alugar carro ou moto para a viagem inteira.
+            </p>
           </Dica>
           <Dica titulo="Comida">
             <p>Meta prática de R$ 300–450 por dia para os três. Almoço mais simples, alguns jantares especiais.</p>

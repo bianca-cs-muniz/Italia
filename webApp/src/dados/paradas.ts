@@ -25,16 +25,10 @@ export const ALTURA_MAPA = 500;
 export const PASSO_GRADE = 55;
 
 export const PARADAS: IParada[] = [
-  { id: "roma", nome: "Roma", x: 234, y: 343, trecho: "roma", dias: "dias 1–5", rotuloX: 14, rotuloY: 5, base: true },
-  { id: "assis", nome: "Assis", x: 236, y: 252, trecho: "umbria", dias: "dias 6–7", rotuloX: -14, rotuloY: 2, ancora: "end", base: true },
-  { id: "florenca", nome: "Florença", x: 166, y: 205, trecho: "toscana", dias: "dias 8–11", rotuloX: 14, rotuloY: 14, base: true },
-  { id: "pisa", nome: "Pisa", x: 118, y: 222, trecho: "cinque", dias: "dia 12", rotuloX: -12, rotuloY: 16, ancora: "end" },
-  { id: "cinque", nome: "Cinque Terre", x: 80, y: 180, trecho: "cinque", dias: "dias 12–14", rotuloX: 0, rotuloY: -26, ancora: "middle", base: true },
-  { id: "veneza", nome: "Veneza", x: 228, y: 84, trecho: "veneza", dias: "dias 15–17", rotuloX: 14, rotuloY: 5, base: true },
-  { id: "verona", nome: "Verona", x: 152, y: 84, trecho: "norte", dias: "dia 18", rotuloX: 0, rotuloY: -24, ancora: "middle" },
-  { id: "milao", nome: "Milão", x: 56, y: 86, trecho: "norte", dias: "dias 18–19", rotuloX: 0, rotuloY: -26, ancora: "middle", base: true },
-  { id: "napoles", nome: "Nápoles", x: 318, y: 404, trecho: "napoles", dias: "dias 20–21", rotuloX: -10, rotuloY: -26, ancora: "end", base: true },
-  { id: "pompeia", nome: "Pompeia", x: 356, y: 412, trecho: "napoles", dias: "dia 21", rotuloX: -10, rotuloY: 20, ancora: "end" },
+  { id: "roma", nome: "Roma", x: 234, y: 343, trecho: "roma", dias: "dias 1–5", rotuloX: -14, rotuloY: 5, ancora: "end", base: true },
+  { id: "napoles", nome: "Nápoles", x: 318, y: 404, trecho: "napoles", dias: "dias 6–7", rotuloX: -14, rotuloY: 20, ancora: "end", base: true },
+  { id: "pompeia", nome: "Pompeia", x: 356, y: 412, trecho: "napoles", dias: "dia 7", rotuloX: -6, rotuloY: -34, ancora: "middle" },
+  { id: "amalfi", nome: "Amalfi", x: 374, y: 452, trecho: "amalfi", dias: "dias 8–9", rotuloX: 12, rotuloY: 12, base: true },
   // Sem hífen no id: os bate-voltas são identificados como "de-para".
   {
     id: "sangiovanni",
@@ -43,13 +37,18 @@ export const PARADAS: IParada[] = [
     x: 387,
     y: 354,
     trecho: "sangiovanni",
-    dias: "dias 22–23",
-    rotuloX: 38,
-    rotuloY: -26,
+    dias: "dias 10–11",
+    rotuloX: -18,
+    rotuloY: -40,
     ancora: "end",
     base: true,
   },
-  { id: "amalfi", nome: "Amalfi", x: 374, y: 452, trecho: "amalfi", dias: "dia 24", rotuloX: 12, rotuloY: 12, base: true },
+  { id: "assis", nome: "Assis", x: 236, y: 252, trecho: "umbria", dias: "dias 12–14", rotuloX: 14, rotuloY: -28, base: true },
+  { id: "florenca", nome: "Florença", x: 166, y: 205, trecho: "toscana", dias: "dias 15–18", rotuloX: 20, rotuloY: -28, ancora: "middle", base: true },
+  { id: "pisa", nome: "Pisa", x: 118, y: 222, trecho: "cinque", dias: "dia 19", rotuloX: -12, rotuloY: 16, ancora: "end" },
+  { id: "cinque", nome: "Cinque Terre", x: 80, y: 180, trecho: "cinque", dias: "dias 19–21", rotuloX: 14, rotuloY: -38, base: true },
+  { id: "milao", nome: "Milão", x: 56, y: 86, trecho: "norte", dias: "dias 22–24", rotuloX: 14, rotuloY: 5, base: true },
+  { id: "como", nome: "Como", nomeCompleto: "Lago di Como", x: 78, y: 44, trecho: "norte", dias: "dia 24", rotuloX: 12, rotuloY: -2 },
 ];
 
 const parada = (id: string): IParada => {
@@ -63,24 +62,18 @@ const ponto = (id: string) => {
   return `${p.x},${p.y}`;
 };
 
-// Entre bases, de Roma a Milão: sobe por Assis, passa por Florença, Pisa,
-// Cinque Terre e Veneza, e chega a Milão por Verona. A curva de Assis a
-// Florença contorna o rótulo de Florença por cima.
-export const CAMINHO_NORTE = `M${ponto("roma")} Q 226,300 ${ponto("assis")} Q 260,130 ${ponto("florenca")} Q 140,220 ${ponto("pisa")} Q 92,208 ${ponto("cinque")} Q 236,190 ${ponto("veneza")} Q 190,98 ${ponto("verona")} Q 104,96 ${ponto("milao")}`;
-
-// Trecho longo, de Milão a Nápoles (pontilhado), descendo pelo lado oeste do mapa.
-const CURVA_LONGA = `C -40,230 140,450 ${ponto("napoles")}`;
-export const CAMINHO_LONGO = `M${ponto("milao")} ${CURVA_LONGA}`;
-
-// Entre bases, de Nápoles a Amalfi, passando por San Giovanni Rotondo (o trecho de carro).
-const CURVA_SUL = `Q 350,360 ${ponto("sangiovanni")} Q 400,405 ${ponto("amalfi")}`;
-export const CAMINHO_SUL = `M${ponto("napoles")} ${CURVA_SUL}`;
-
-// O percurso inteiro num traço só: é o trilho (invisível) por onde o trem anda.
-export const CAMINHO_TREM = `${CAMINHO_NORTE} ${CURVA_LONGA} ${CURVA_SUL}`;
+// O percurso inteiro num traço só, de Roma a Milão: desce a Nápoles e Amalfi,
+// cruza até San Giovanni Rotondo, sobe a Assis e segue por Florença, Pisa e
+// Cinque Terre. É o traço visível e também o trilho por onde o trem anda. A
+// curva de San Giovanni Rotondo a Assis abre para a direita para contornar o
+// rótulo de San Giovanni Rotondo.
+export const CAMINHO_ROTA = `M${ponto("roma")} Q 270,385 ${ponto("napoles")} Q 335,440 ${ponto("amalfi")} Q 404,405 ${ponto("sangiovanni")} C 426,292 330,264 ${ponto("assis")} Q 196,236 ${ponto("florenca")} Q 140,220 ${ponto("pisa")} Q 92,208 ${ponto("cinque")} Q 40,135 ${ponto("milao")}`;
 
 // Bate-voltas a partir de uma base.
-export const BATE_VOLTAS: { id: string; d: string }[] = [["napoles", "pompeia"]].map(([de, para]) => ({
+export const BATE_VOLTAS: { id: string; d: string }[] = [
+  ["napoles", "pompeia"],
+  ["milao", "como"],
+].map(([de, para]) => ({
   id: `${de}-${para}`,
   d: `M${ponto(de)} L${ponto(para)}`,
 }));

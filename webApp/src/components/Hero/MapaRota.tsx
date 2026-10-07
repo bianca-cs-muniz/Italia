@@ -1,19 +1,7 @@
 "use client";
 
 import React, { useEffect, useRef, useState } from "react";
-import {
-  ALTURA_MAPA,
-  BATE_VOLTAS,
-  CAMINHO_LONGO,
-  CAMINHO_NORTE,
-  CAMINHO_SUL,
-  CAMINHO_TREM,
-  IParada,
-  LARGURA_MAPA,
-  PARADA_INICIAL,
-  PARADAS,
-  PASSO_GRADE,
-} from "@/dados/paradas";
+import { ALTURA_MAPA, BATE_VOLTAS, CAMINHO_ROTA, IParada, LARGURA_MAPA, PARADA_INICIAL, PARADAS, PASSO_GRADE } from "@/dados/paradas";
 import { movimentoReduzido, useMovimentoReduzido } from "@/shared/components/useMovimentoReduzido";
 
 // Linhas da grade de fundo (sem as bordas do mapa).
@@ -21,7 +9,7 @@ const LINHAS_HORIZONTAIS = Array.from({ length: 8 }, (_, i) => (i + 1) * PASSO_G
 const LINHAS_VERTICAIS = Array.from({ length: 7 }, (_, i) => (i + 1) * PASSO_GRADE);
 
 // Tempo de uma volta completa do trem, em ms.
-const VOLTA_DO_TREM = 19000;
+const VOLTA_DO_TREM = 12000;
 
 const irParaTrecho = (parada: IParada) => {
   document.getElementById(`ch-${parada.trecho}`)?.scrollIntoView({ behavior: movimentoReduzido() ? "auto" : "smooth" });
@@ -29,21 +17,17 @@ const irParaTrecho = (parada: IParada) => {
 
 export const MapaRota = () => {
   const reduzido = useMovimentoReduzido();
-  const norteRef = useRef<SVGPathElement>(null);
-  const sulRef = useRef<SVGPathElement>(null);
-  const trilhoRef = useRef<SVGPathElement>(null);
+  const rotaRef = useRef<SVGPathElement>(null);
   const tremRef = useRef<SVGCircleElement>(null);
   const [paradasVisiveis, setParadasVisiveis] = useState(false);
   const [desenhado, setDesenhado] = useState(false);
 
-  // O traçado é animado pelo comprimento real de cada caminho, que só o
-  // navegador sabe medir; por isso tudo acontece aqui, depois de montar.
+  // O traçado é animado pelo comprimento real do caminho, que só o navegador
+  // sabe medir; por isso tudo acontece aqui, depois de montar.
   useEffect(() => {
-    const norte = norteRef.current;
-    const sul = sulRef.current;
-    const trilho = trilhoRef.current;
+    const rota = rotaRef.current;
     const trem = tremRef.current;
-    if (!norte || !sul || !trilho || !trem) return;
+    if (!rota || !trem) return;
 
     const temporizadores: number[] = [];
     let quadro = 0;
@@ -59,16 +43,16 @@ export const MapaRota = () => {
       caminho.style.transition = `stroke-dashoffset ${duracao}s cubic-bezier(.6,.1,.3,1) ${atraso}s`;
       caminho.style.strokeDashoffset = "0";
     };
-    tracar(norte, 2.8, 0.5);
-    tracar(sul, 0.9, 3.5);
+    tracar(rota, 3.4, 0.5);
 
     temporizadores.push(window.setTimeout(() => setParadasVisiveis(true), reduzido ? 0 : 500));
-    temporizadores.push(window.setTimeout(() => setDesenhado(true), reduzido ? 0 : 3100));
+    // Os bate-voltas só aparecem quando o traço chegou ao fim (0,5 s + 3,4 s).
+    temporizadores.push(window.setTimeout(() => setDesenhado(true), reduzido ? 0 : 3900));
 
-    // O trem percorre o caminho inteiro em laço. Sem animação quando a pessoa
+    // O trem percorre a própria rota em laço. Sem animação quando a pessoa
     // pediu menos movimento.
     if (!reduzido) {
-      const comprimento = trilho.getTotalLength();
+      const comprimento = rota.getTotalLength();
       temporizadores.push(
         window.setTimeout(() => {
           let inicio: number | null = null;
@@ -76,7 +60,7 @@ export const MapaRota = () => {
           const andar = (agora: number) => {
             if (inicio === null) inicio = agora;
             const fracao = ((agora - inicio) / VOLTA_DO_TREM) % 1;
-            const ponto = trilho.getPointAtLength(fracao * comprimento);
+            const ponto = rota.getPointAtLength(fracao * comprimento);
             trem.setAttribute("cx", String(ponto.x));
             trem.setAttribute("cy", String(ponto.y));
             quadro = requestAnimationFrame(andar);
@@ -110,10 +94,7 @@ export const MapaRota = () => {
       {BATE_VOLTAS.map((bateVolta) => (
         <path key={bateVolta.id} className="spur" d={bateVolta.d} />
       ))}
-      <path className="long" d={CAMINHO_LONGO} />
-      <path ref={norteRef} className="main" d={CAMINHO_NORTE} />
-      <path ref={sulRef} className="main" d={CAMINHO_SUL} />
-      <path ref={trilhoRef} d={CAMINHO_TREM} fill="none" stroke="none" />
+      <path ref={rotaRef} className="main" d={CAMINHO_ROTA} />
 
       {PARADAS.map((parada, i) => {
         const ancora = parada.ancora ?? "start";

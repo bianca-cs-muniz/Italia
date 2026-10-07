@@ -25,10 +25,10 @@ const NOVE_CAMPOS = ["trecho", "tipo", "nome", "resumo", "preco", "link", "descr
 
 const LUGAR: ILugar = {
   id: "l1",
-  trecho: "veneza",
+  trecho: "norte",
   tipo: "Hospedagem",
   nome: "Casa no canal",
-  resumo: "Perto do Rialto",
+  resumo: "Perto dos Navigli",
   preco: "R$ 2.000",
   link: "https://exemplo.com/casa",
   descricao: "Dois quartos.",
@@ -117,10 +117,10 @@ describe("FormularioLugar: corpo enviado ao salvar", () => {
     await waitFor(() => expect(aoSalvar).toHaveBeenCalledTimes(1));
     const [dados, id] = aoSalvar.mock.calls[0];
     expect(dados).toEqual({
-      trecho: "veneza",
+      trecho: "norte",
       tipo: "Hospedagem",
       nome: "Casa no canal",
-      resumo: "Perto do Rialto",
+      resumo: "Perto dos Navigli",
       preco: "R$ 2.000",
       link: "https://exemplo.com/casa",
       descricao: "Dois quartos.",
@@ -128,6 +128,41 @@ describe("FormularioLugar: corpo enviado ao salvar", () => {
       fotos: ["f1", "f2"],
     });
     expect(id).toBe("l1");
+  });
+
+  // Veneza saiu do roteiro e a API recusa esse trecho: o formulário abre no
+  // trecho inicial (roma, o primeiro válido) e é ele que vai no corpo.
+  it("deve mandar roma ao salvar, sem mudanças, um lugar antigo de veneza", async () => {
+    const { aoSalvar, getByLabelText, enviar } = montar({ ...LUGAR, trecho: "veneza" });
+
+    expect((getByLabelText(/^Trecho da viagem/) as HTMLSelectElement).value).toBe("roma");
+
+    enviar();
+
+    await waitFor(() => expect(aoSalvar).toHaveBeenCalledTimes(1));
+    const [dados, id] = aoSalvar.mock.calls[0];
+    expect(dados).toEqual({
+      trecho: "roma",
+      tipo: "Hospedagem",
+      nome: "Casa no canal",
+      resumo: "Perto dos Navigli",
+      preco: "R$ 2.000",
+      link: "https://exemplo.com/casa",
+      descricao: "Dois quartos.",
+      destaques: ["Wi-Fi", "Terraço"],
+      fotos: ["f1", "f2"],
+    });
+    expect(id).toBe("l1");
+  });
+
+  it("deve mandar o trecho escolhido ao mover um lugar antigo de veneza", async () => {
+    const { aoSalvar, preencher, enviar } = montar({ ...LUGAR, trecho: "veneza" });
+    preencher(/^Trecho da viagem/, "toscana");
+
+    enviar();
+
+    await waitFor(() => expect(aoSalvar).toHaveBeenCalledTimes(1));
+    expect(aoSalvar.mock.calls[0][0]).toMatchObject({ trecho: "toscana" });
   });
 
   it("deve mandar o trecho e o tipo escolhidos", async () => {

@@ -291,13 +291,13 @@ describe("useLugares: atualizar", () => {
 
   it("deve refletir a mudança de trecho do lugar", async () => {
     const { result } = await montar([lugar("b", { trecho: "roma" })]);
-    atualizar.mockResolvedValueOnce(lugar("b", { trecho: "veneza" }));
+    atualizar.mockResolvedValueOnce(lugar("b", { trecho: "norte" }));
 
     await act(async () => {
-      await result.current.atualizarLugar("b", { ...ENTRADA, trecho: "veneza" });
+      await result.current.atualizarLugar("b", { ...ENTRADA, trecho: "norte" });
     });
 
-    expect(result.current.lugares.map((l) => l.trecho)).toEqual(["veneza"]);
+    expect(result.current.lugares.map((l) => l.trecho)).toEqual(["norte"]);
   });
 
   it("deve repassar o erro e manter o lugar como estava quando a atualização falha", async () => {

@@ -3,9 +3,8 @@
 export const PRIORIZAR_COM_CRIANCA = [
   "Praia em Monterosso",
   "Gelato",
-  "Veneza",
-  "Murano e Burano",
   "Passeio de barco",
+  "Lago di Como",
   "Torre de Pisa",
   "Pompeia em visita curta",
   "Pizza em Nápoles",
@@ -19,10 +18,9 @@ export const PRIORIDADES = [
   "Roma e Vaticano",
   "Assis e San Giovanni Rotondo",
   "Florença e Toscana",
-  "Veneza",
   "Cinque Terre",
   "Nápoles e Pompeia",
   "Costa Amalfitana",
-  "Milão",
-  "Verona e Pisa de passagem",
+  "Milão e Lago di Como",
+  "Pisa de passagem",
 ];

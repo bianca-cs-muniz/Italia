@@ -74,23 +74,23 @@ export const Orcamento = () => {
         </Total>
         <p className="fine">
           Valores são metas de planejamento para 2029/2030, não cotações futuras. Vale manter uma reserva adicional além da meta.
-          Faixas calculadas para o roteiro anterior, de 22–23 dias; revisar para 25.
+          Faixas calculadas para o roteiro anterior, de 22–23 dias; revisar para o roteiro atual, de 25 dias, com carro de Salerno a
+          Assis e volta por Milão.
         </p>
         <Trecho ref={refTrecho} className={classeRevelar(trechoVisivel)}>
-          <h3>
-            Estimativa do trecho: {ESTIMATIVA_TRECHO.titulo} ({ESTIMATIVA_TRECHO.dias.toLowerCase()})
-          </h3>
-          <p className="apoio">Recorte dos primeiros 11 dias para os três; não se soma à meta. Escala própria.</p>
+          <h3>Estimativa parcial: {ESTIMATIVA_TRECHO.titulo}</h3>
+          <p className="apoio">Recorte de três cidades para os três; não se soma à meta. Escala própria.</p>
           <Barras>
             {ESTIMATIVA_TRECHO.faixas.map((faixa, i) => (
               <LinhaBarra key={faixa.rotulo} faixa={faixa} teto={TETO_ESTIMATIVA_TRECHO} posicao={i} visivel={trechoVisivel} />
             ))}
           </Barras>
           <p className="total-trecho">
-            Total do trecho <b>{formatarFaixaReais(TOTAL_TRECHO.minimo, TOTAL_TRECHO.maximo)}</b>
+            Total da estimativa <b>{formatarFaixaReais(TOTAL_TRECHO.minimo, TOTAL_TRECHO.maximo)}</b>
           </p>
           <p className="nota">
-            Hospedagem estimada para 10 noites (Roma 5, Assis 2, Florença 3); a 4ª noite em Florença não está incluída.
+            Calculada para o roteiro anterior: 10 noites (Roma 5, Assis 2, Florença 3) e trem entre as três. Hoje são 12 noites nessas
+            cidades e elas não são mais seguidas; revisar.
           </p>
         </Trecho>
       </div>

@@ -79,7 +79,7 @@ describe("POST /api/lugares", () => {
     expect(resposta.body).not.toHaveProperty("admin");
   });
 
-  it.each(["roma", "umbria", "toscana", "cinque", "veneza", "norte", "napoles", "sangiovanni", "amalfi"])(
+  it.each(["roma", "napoles", "amalfi", "sangiovanni", "umbria", "toscana", "cinque", "norte"])(
     "deve aceitar o trecho %s",
     async (trecho) => {
       const resposta = await request(app).post("/api/lugares").send(lugarValido({ trecho }));
@@ -116,6 +116,8 @@ describe("POST /api/lugares", () => {
   describe("entrada inválida → 400 e nada é gravado", () => {
     it.each([
       ["trecho fora da lista", { trecho: "sicilia" }, "trecho: Trecho inválido."],
+      ["veneza, que saiu do roteiro", { trecho: "veneza" }, "trecho: Trecho inválido."],
+      ["verona, que nunca foi trecho", { trecho: "verona" }, "trecho: Trecho inválido."],
       ["trecho com maiúscula", { trecho: "Roma" }, "trecho: Trecho inválido."],
       ["retorno, que é capítulo do roteiro mas não tem lugares", { trecho: "retorno" }, "trecho: Trecho inválido."],
       ["trecho novo escrito com hífen", { trecho: "san-giovanni" }, "trecho: Trecho inválido."],
@@ -331,11 +333,25 @@ describe("GET /api/lugares", () => {
 
   it("deve trazer os lugares de todos os trechos", async () => {
     await criarLugar(app, { trecho: "roma" });
-    await criarLugar(app, { trecho: "veneza" });
+    await criarLugar(app, { trecho: "norte" });
 
     const resposta = await request(app).get("/api/lugares");
 
-    expect(resposta.body.map((lugar: any) => lugar.trecho)).toEqual(["roma", "veneza"]);
+    expect(resposta.body.map((lugar: any) => lugar.trecho)).toEqual(["roma", "norte"]);
+  });
+
+  // Veneza saiu do roteiro, mas o que já estava gravado continua aparecendo
+  // (o front mostra numa grade à parte, para mover ou apagar).
+  it("deve continuar listando um lugar antigo gravado no trecho veneza", async () => {
+    const antigo = banco.semearLugar({ trecho: "veneza", nome: "Casa no canal", criadoEm: new Date("2026-01-01T10:00:00Z") });
+    await criarLugar(app, { trecho: "roma" });
+
+    const resposta = await request(app).get("/api/lugares");
+
+    expect(resposta.status).toBe(200);
+    expect(resposta.body.map((lugar: any) => lugar.trecho)).toEqual(["veneza", "roma"]);
+    expect(resposta.body[0]).toMatchObject({ id: antigo.id, trecho: "veneza", nome: "Casa no canal" });
+    expect(Object.keys(resposta.body[0]).sort()).toEqual([...CAMPOS_DA_RESPOSTA].sort());
   });
 
   it("deve trazer os lugares dos trechos novos (Úmbria e San Giovanni Rotondo)", async () => {
@@ -424,6 +440,41 @@ describe("PUT /api/lugares/:id", () => {
     expect(lista.body).toEqual([lugar]);
   });
 
+  it("deve mover para um trecho válido um lugar antigo gravado em veneza", async () => {
+    const antigo = banco.semearLugar({ trecho: "veneza" });
+
+    const resposta = await request(app).put(`/api/lugares/${antigo.id}`).send(lugarValido({ trecho: "norte" }));
+    const lista = await request(app).get("/api/lugares");
+
+    expect(resposta.status).toBe(200);
+    expect(resposta.body).toMatchObject({ id: antigo.id, trecho: "norte" });
+    expect(lista.body.map((lugar: any) => lugar.trecho)).toEqual(["norte"]);
+  });
+
+  it("deve recusar a edição que mantém veneza e deixar o lugar antigo como estava", async () => {
+    const antigo = banco.semearLugar({ trecho: "veneza", nome: "Casa no canal" });
+
+    const resposta = await request(app)
+      .put(`/api/lugares/${antigo.id}`)
+      .send(lugarValido({ trecho: "veneza", nome: "Casa editada" }));
+
+    expect(resposta.status).toBe(400);
+    expect(resposta.body).toEqual({ error: "trecho: Trecho inválido." });
+    expect(banco.lugares()).toHaveLength(1);
+    expect(banco.lugares()[0]).toMatchObject({ id: antigo.id, trecho: "veneza", nome: "Casa no canal" });
+  });
+
+  it("deve recusar mover um lugar de um trecho válido para veneza", async () => {
+    const lugar = await criarLugar(app, { trecho: "norte" });
+
+    const resposta = await request(app).put(`/api/lugares/${lugar.id}`).send(lugarValido({ trecho: "veneza" }));
+    const lista = await request(app).get("/api/lugares");
+
+    expect(resposta.status).toBe(400);
+    expect(resposta.body).toEqual({ error: "trecho: Trecho inválido." });
+    expect(lista.body).toEqual([lugar]);
+  });
+
   it("deve manter id e criadoEm e gravar a alteração", async () => {
     const lugar = await criarLugar(app);
 
@@ -491,6 +542,17 @@ describe("DELETE /api/lugares/:id", () => {
     expect(resposta.status).toBe(204);
     expect(resposta.text).toBe("");
     expect(lista.body).toEqual([]);
+  });
+
+  it("deve apagar um lugar antigo gravado em veneza", async () => {
+    const antigo = banco.semearLugar({ trecho: "veneza" });
+    const outro = await criarLugar(app, { trecho: "roma" });
+
+    const resposta = await request(app).delete(`/api/lugares/${antigo.id}`);
+    const lista = await request(app).get("/api/lugares");
+
+    expect(resposta.status).toBe(204);
+    expect(lista.body).toEqual([outro]);
   });
 
   it("deve apagar só o lugar do id informado", async () => {

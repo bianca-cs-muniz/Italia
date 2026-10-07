@@ -15,9 +15,9 @@ describe("textoNoites", () => {
     expect(textoNoites(noites)).toBe(esperado);
   });
 
-  it("deve escrever a única noite de Amalfi no singular", () => {
+  it("deve escrever as 2 noites de Amalfi no plural", () => {
     const amalfi = TRECHOS_COM_BASE.find((trecho) => trecho.id === "amalfi");
 
-    expect(textoNoites(Number(amalfi?.noites))).toBe("1 noite");
+    expect(textoNoites(Number(amalfi?.noites))).toBe("2 noites");
   });
 });

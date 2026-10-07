@@ -9,7 +9,7 @@ const TITULO = "Itália";
 const FATOS: { rotulo: string; valor: string; destaque?: boolean }[] = [
   { rotulo: "Duração", valor: "25 dias" },
   { rotulo: "Estilo", valor: "Confortável, sem luxo" },
-  { rotulo: "Transporte", valor: "Trem, barco e um trecho de carro" },
+  { rotulo: "Transporte", valor: "Trem, barco e carro de Salerno a Assis" },
   { rotulo: "Planejamento", valor: "2029/2030" },
   { rotulo: "Meta para os 3", valor: "R$ 55–60 mil", destaque: true },
 ];
@@ -52,10 +52,6 @@ export const Hero = () => {
             <span>
               <i />
               Entre bases
-            </span>
-            <span>
-              <i className="dash" />
-              Trecho longo
             </span>
             <span>
               <i className="spurl" />

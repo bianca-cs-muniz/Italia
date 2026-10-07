@@ -6,7 +6,8 @@ export type TipoLugar = (typeof TIPOS_LUGAR)[number];
 
 export interface ILugar {
   id: string;
-  trecho: TrechoId;
+  // É o que a API devolve: pode ser um trecho que já saiu do roteiro.
+  trecho: string;
   tipo: TipoLugar;
   nome: string;
   resumo: string;
